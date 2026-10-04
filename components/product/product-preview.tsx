@@ -7,9 +7,9 @@ import { Upload } from "lucide-react";
 import { newProductAtom } from "@/store/atoms/new-product";
 import { previewFields } from "@/lib/constant/product.constant";
 import skyImage from "@/public/sky.jpg";
-import { Label } from "./ui/label";
-import { Stars } from "./home/stars";
-import { WindowDots } from "./home/window-dots";
+import { Label } from "@/components/ui/label";
+import { Stars } from "@/components/home/stars";
+import { WindowDots } from "@/components/home/window-dots";
 
 export default function ProductPreview() {
   const newProduct = useAtomValue(newProductAtom);

@@ -12,8 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DeleteDialog from "@/components/delete-dialog";
-import EditProductDialog from "@/components/edit-product-dialog";
+import DeleteDialog from "@/components/shared/delete-dialog";
+import EditProductDialog from "@/components/product/edit-product-dialog";
 import { formatRating } from "@/lib/review-stats";
 
 interface ProductCardProps {

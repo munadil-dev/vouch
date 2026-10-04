@@ -2,8 +2,8 @@ import { cache } from "react";
 import prisma from "@/lib/db";
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
-import TrackView from "@/components/track-view";
-import ReviewForm from "@/components/review-form";
+import TrackView from "@/components/review/track-view";
+import ReviewForm from "@/components/review/review-form";
 
 interface ReviewPageProps {
   params: Promise<{

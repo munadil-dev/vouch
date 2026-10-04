@@ -1,12 +1,12 @@
 import { Search } from "lucide-react";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "@/components/ui/select";
 
 export type Tab = "all" | "favorites";
 

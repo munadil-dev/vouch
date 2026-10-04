@@ -4,10 +4,10 @@ import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { SubmitEvent, useState } from "react";
 import { flushSync } from "react-dom";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogClose,
@@ -16,7 +16,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog";
+} from "@/components/ui/dialog";
 import { newProductSchema, NewProductType } from "@/schemas/new-product";
 
 type Field = keyof NewProductType;

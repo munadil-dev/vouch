@@ -1,5 +1,5 @@
 import { Geist } from "next/font/google";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/layout/navbar";
 
 const geist = Geist({ subsets: ["latin"], display: "swap" });
 

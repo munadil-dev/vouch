@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import SuccessIcon from "@/components/success-icon";
+import SuccessIcon from "@/components/shared/success-icon";
 
 export const metadata: Metadata = {
   title: "Review sent",

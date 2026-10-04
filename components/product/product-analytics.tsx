@@ -8,18 +8,18 @@ import { buildDailySeries, ranges } from "@/lib/analytics";
 import {
   type ChartConfig,
   ChartContainer,
-} from "./evilcharts/ui/recharts-chart";
+} from "@/components/evilcharts/ui/recharts-chart";
 import {
   ChartTooltip,
   ChartTooltipContent,
-} from "./evilcharts/ui/recharts-tooltip";
+} from "@/components/evilcharts/ui/recharts-tooltip";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "@/components/ui/select";
 
 const rangeItems = ranges.map((days) => ({
   value: days,

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button, buttonVariants } from "@/components/ui/button";
-import SuccessIcon from "@/components/success-icon";
+import SuccessIcon from "@/components/shared/success-icon";
 
 export default function ProductCreated({
   id,

@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { GithubIconSVG } from "@/icons/Github";
 import { siteLinks } from "@/lib/constant/site.constant";
-import { buttonVariants } from "./ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import ProfileDropdown from "./profile-dropdown";
 import NavbarShell from "./navbar-shell";
 

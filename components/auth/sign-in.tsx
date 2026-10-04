@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "@/lib/auth";
 import { GoogleSVG } from "@/icons/Google";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import SignInStory from "./sign-in-story";
 import skyImage from "@/public/sky.jpg";
 

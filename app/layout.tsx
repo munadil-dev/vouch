@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 
-import Providers from "@/components/providers";
+import Providers from "@/components/layout/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 

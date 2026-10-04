@@ -5,10 +5,10 @@ import { useAtom } from "jotai";
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import BackLink from "@/components/back-link";
-import ProductForm from "@/components/product-form";
-import ProductPreview from "@/components/product-preview";
-import ProductCreated from "@/components/product-created";
+import BackLink from "@/components/shared/back-link";
+import ProductForm from "@/components/product/product-form";
+import ProductPreview from "@/components/product/product-preview";
+import ProductCreated from "@/components/product/product-created";
 import { createdProductAtom } from "@/store/atoms/created-product";
 
 export default function NewProduct() {

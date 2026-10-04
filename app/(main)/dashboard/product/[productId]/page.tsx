@@ -1,10 +1,13 @@
 import prisma from "@/lib/db";
 import { auth } from "@/lib/auth";
-import BackLink from "@/components/back-link";
+import BackLink from "@/components/shared/back-link";
 import { notFound, redirect } from "next/navigation";
-import ReviewList from "@/components/review-list";
-import ProductAnalytics from "@/components/product-analytics";
-import { ProductActions, ShareSection } from "@/components/product-overview";
+import ReviewList from "@/components/review/review-list";
+import ProductAnalytics from "@/components/product/product-analytics";
+import {
+  ProductActions,
+  ShareSection,
+} from "@/components/product/product-overview";
 
 export default async function Product({
   params,

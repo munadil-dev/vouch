@@ -5,7 +5,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000/";
 
   return [
-    { url: new URL("/", baseUrl).href },
+    ...["/", "/terms", "/privacy"].map((path) => ({
+      url: new URL(path, baseUrl).href,
+    })),
     ...source
       .getPages()
       .map((page) => ({ url: new URL(page.url, baseUrl).href })),

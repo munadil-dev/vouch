@@ -4,7 +4,7 @@ import { footerColumns, socialLinks } from "@/lib/constant/footer.constant";
 export default function Footer() {
   return (
     <footer className="border-t border-zinc-200 bg-white">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-6">
         <div className="lg:col-span-2">
           <Link
             className="font-instrument-serif text-xl font-medium text-zinc-950"

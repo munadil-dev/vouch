@@ -23,5 +23,12 @@ export const footerColumns = [
       { label: "Embed the widget", href: "/docs/embed-widget" },
     ],
   },
+  {
+    title: "Legal",
+    links: [
+      { label: "Terms", href: "/terms" },
+      { label: "Privacy", href: "/privacy" },
+    ],
+  },
   { title: "Connect", links: socialLinks },
 ];

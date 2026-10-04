@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { Check, ChevronDown, Copy, ExternalLink, Star } from "lucide-react";
 import CodeComponent from "./code";
-import { Stars } from "./home/stars";
-import { Button, buttonVariants } from "./ui/button";
+import { Stars } from "@/components/home/stars";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { averageRating, formatRating } from "@/lib/review-stats";
 
 export function ProductActions({ url }: { url: string }) {

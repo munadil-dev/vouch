@@ -147,7 +147,11 @@ app/
     dashboard/              Product and review management
   api/                      Route handlers (reviews, products, embed widget, docs search)
   docs/                     Documentation site (Fumadocs)
-components/                 UI components (shadcn/ui in components/ui)
+components/
+  auth/ layout/ home/       Sign-in, navbar and footer, landing page
+  product/ review/          Product and review features
+  shared/                   Used by more than one feature
+  ui/                       shadcn/ui
 icons/                      Brand icons (Google, GitHub, X)
 content/docs/               Documentation pages in MDX
 lib/                        Auth, database client, docs source, utilities

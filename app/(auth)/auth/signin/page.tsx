@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import SignInComponent from "@/components/sign-in";
+import SignInComponent from "@/components/auth/sign-in";
 
 export const metadata: Metadata = {
   title: "Sign in",

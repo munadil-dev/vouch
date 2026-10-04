@@ -5,10 +5,10 @@ import axios, { AxiosError } from "axios";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
-import { Avatar } from "./home/avatar";
-import { Stars } from "./home/stars";
-import { HeartButton } from "./home/interactive";
-import DeleteDialog from "./delete-dialog";
+import { Avatar } from "@/components/home/avatar";
+import { Stars } from "@/components/home/stars";
+import { HeartButton } from "@/components/home/interactive";
+import DeleteDialog from "@/components/shared/delete-dialog";
 
 interface ReviewProps {
   review: {

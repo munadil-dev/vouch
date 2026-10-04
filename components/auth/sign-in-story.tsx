@@ -6,9 +6,9 @@ import { AnimatePresence, MotionConfig, useReducedMotion } from "motion/react";
 import * as motion from "motion/react-client";
 import { ease } from "@/lib/constant/ui.constant";
 import { demoResponses } from "@/lib/constant/hero-demo.constant";
-import { Avatar } from "./home/avatar";
-import { Stars } from "./home/stars";
-import { WindowDots } from "./home/window-dots";
+import { Avatar } from "@/components/home/avatar";
+import { Stars } from "@/components/home/stars";
+import { WindowDots } from "@/components/home/window-dots";
 
 const replies = ["priya", "tom", "lena"].map((id) =>
   demoResponses.find((response) => response.id === id)!

@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import StarRating from "@/components/star-rating";
+import StarRating from "@/components/review/star-rating";
 import { ratingAtom } from "@/store/atoms/rating";
 import { newReviewSchema } from "@/schemas/new-review";
 import { UPLOADCARE_PUBLIC_KEY } from "@/lib/constant/uploadcare.constant";

@@ -142,7 +142,7 @@ Only reviews you mark as a favorite are shown. The CDN caches responses for 2 mi
 ```
 app/
   (auth)/auth/signin/       Sign-in page, without the site navbar
-  (main)/                   App pages with the site navbar and footer
+  (main)/                   App pages with the site navbar
     (review)/[productId]/ Public review form
     dashboard/              Product and review management
   api/                      Route handlers (reviews, products, embed widget, docs search)

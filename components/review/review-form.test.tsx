@@ -1,11 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios, { AxiosError, AxiosHeaders } from "axios";
-import { createStore, Provider } from "jotai";
 import { toast } from "sonner";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import ReviewForm from "./review-form";
-import { ratingAtom } from "@/store/atoms/rating";
 
 const push = vi.fn();
 
@@ -70,14 +68,7 @@ const productDetails = {
 };
 
 function renderForm() {
-  const store = createStore();
-  store.set(ratingAtom, 4);
-
-  render(
-    <Provider store={store}>
-      <ReviewForm productDetails={productDetails} />
-    </Provider>
-  );
+  render(<ReviewForm productDetails={productDetails} />);
 }
 
 async function fillAndSubmit() {
@@ -89,6 +80,7 @@ async function fillAndSubmit() {
     screen.getByRole("textbox", { name: "Your email" }),
     "jane@example.com"
   );
+  await user.click(screen.getByRole("button", { name: "Rate 4 stars" }));
   await user.click(screen.getByRole("button", { name: "Submit review" }));
 }
 
@@ -153,6 +145,7 @@ describe("ReviewForm", () => {
 
     expect(toast.error).toHaveBeenCalledWith("Invalid email address");
     expect(push).not.toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: "Submit review" })).toBeEnabled();
   });
 
   it("shows inline errors and skips the request when fields are empty", async () => {

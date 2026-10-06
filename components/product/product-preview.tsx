@@ -2,17 +2,21 @@
 
 import Image from "next/image";
 import { Fragment } from "react";
-import { useAtomValue } from "jotai";
 import { Upload } from "lucide-react";
-import { newProductAtom } from "@/store/atoms/new-product";
+import { Control, useWatch } from "react-hook-form";
+import type { NewProductType } from "@/schemas/new-product";
 import { previewFields } from "@/lib/constant/product.constant";
 import skyImage from "@/public/sky.jpg";
 import { Label } from "@/components/ui/label";
 import { Stars } from "@/components/home/stars";
 import { WindowDots } from "@/components/home/window-dots";
 
-export default function ProductPreview() {
-  const newProduct = useAtomValue(newProductAtom);
+export default function ProductPreview({
+  control,
+}: {
+  control: Control<NewProductType>;
+}) {
+  const [title, message] = useWatch({ control, name: ["title", "message"] });
 
   return (
     <section
@@ -40,11 +44,11 @@ export default function ProductPreview() {
 
         <div aria-hidden="true" className="flex flex-col gap-3 bg-zinc-50 p-6">
           <p className="text-center text-xl font-semibold tracking-tight wrap-anywhere text-zinc-950">
-            {newProduct.title || "Your page title"}
+            {title || "Your page title"}
           </p>
 
           <p className="mb-2 text-center text-sm wrap-anywhere text-zinc-600">
-            {newProduct.message || "Your message to customers"}
+            {message || "Your message to customers"}
           </p>
 
           {previewFields.map(({ label, height }) => (

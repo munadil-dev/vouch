@@ -31,8 +31,8 @@ export default function Terms() {
 
           <h2>Your account</h2>
           <p>
-            You sign in with Google, and you are responsible for what happens
-            under your account.
+            You sign in with a third-party account, and you are responsible for
+            what happens under your account.
           </p>
 
           <h2>Your content</h2>

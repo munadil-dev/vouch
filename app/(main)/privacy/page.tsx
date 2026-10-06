@@ -68,10 +68,9 @@ export default function Privacy() {
 
           <h2>Keeping and deleting data</h2>
           <p>
-            Data is kept until it is deleted. Owners can delete products and
-            reviews at any time from the dashboard, and deleting a product also
-            deletes its reviews and view counts. To delete your whole account,
-            contact us and we will remove it.
+            We keep your data until it is deleted. You can delete your content
+            at any time from the dashboard. To delete your account, contact us
+            and we will remove it.
           </p>
 
           <h2>Your rights</h2>

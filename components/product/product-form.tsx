@@ -2,23 +2,17 @@
 
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { SubmitEvent, useState } from "react";
-import { flushSync } from "react-dom";
-import { useAtom, useSetAtom } from "jotai";
-import { useResetAtom } from "jotai/utils";
+import { useSetAtom } from "jotai";
+import type { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { newProductAtom } from "@/store/atoms/new-product";
 import { createdProductAtom } from "@/store/atoms/created-product";
-import { newProductSchema } from "@/schemas/new-product";
-
-type Field = "name" | "title" | "message";
-type FieldErrors = Partial<Record<Field, string>>;
+import type { NewProductType } from "@/schemas/new-product";
 
 const fields: {
-  id: Field;
+  id: keyof NewProductType;
   label: string;
   hint: string;
   placeholder: string;
@@ -45,46 +39,27 @@ const fields: {
   },
 ];
 
-export default function ProductForm() {
-  const [newProduct, setNewProduct] = useAtom(newProductAtom);
-  const resetNewProduct = useResetAtom(newProductAtom);
+export default function ProductForm({
+  form,
+}: {
+  form: UseFormReturn<NewProductType>;
+}) {
   const setCreatedProduct = useSetAtom(createdProductAtom);
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = form;
 
-  const handleChange = (field: Field, value: string) => {
-    setNewProduct((current) => ({ ...current, [field]: value }));
-    setErrors((current) => ({ ...current, [field]: undefined }));
-  };
-
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const result = newProductSchema.safeParse(newProduct);
-
-    if (!result.success) {
-      const fieldErrors: FieldErrors = {};
-
-      for (const issue of result.error.issues) {
-        fieldErrors[issue.path[0] as Field] ??= issue.message;
-      }
-
-      flushSync(() => setErrors(fieldErrors));
-
-      const firstInvalid = fields.find((field) => fieldErrors[field.id]);
-      document.getElementById(firstInvalid?.id ?? "")?.focus();
-      return;
-    }
-
-    setIsSubmitting(true);
-
+  const onSubmit = async (product: NewProductType) => {
     try {
-      const res = await axios.post("/api/product", result.data);
+      const res = await axios.post("/api/product", product);
 
       if (res.data.success) {
         toast.success(res.data.message);
-        setCreatedProduct({ id: res.data.id, name: result.data.name });
-        resetNewProduct();
+        setCreatedProduct({ id: res.data.id, name: product.name });
+        reset();
       }
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -95,24 +70,19 @@ export default function ProductForm() {
       } else {
         toast.error("An unexpected error occurred");
       }
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   return (
-    <form className="mt-10" onSubmit={handleSubmit} noValidate>
+    <form className="mt-10" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="flex flex-col gap-7">
         {fields.map((field) => {
-          const error = errors[field.id];
+          const error = errors[field.id]?.message;
 
           const inputProps = {
+            ...register(field.id),
             id: field.id,
             placeholder: field.placeholder,
-            value: newProduct[field.id],
-            onChange: (
-              e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-            ) => handleChange(field.id, e.target.value),
             "aria-required": true,
             "aria-invalid": error ? true : undefined,
             "aria-describedby": `${field.id}-hint`,

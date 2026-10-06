@@ -3,16 +3,16 @@
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
-import { useAtomValue } from "jotai";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { SubmitEvent, useState } from "react";
+import { Controller, FieldErrors, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import StarRating from "@/components/review/star-rating";
-import { ratingAtom } from "@/store/atoms/rating";
-import { newReviewSchema } from "@/schemas/new-review";
+import { newReviewSchema, NewReviewType } from "@/schemas/new-review";
 import { UPLOADCARE_PUBLIC_KEY } from "@/lib/constant/uploadcare.constant";
 
 import "@uploadcare/react-uploader/core.css";
@@ -23,7 +23,6 @@ const FileUploaderRegular = dynamic(
 );
 
 type Field = "message" | "customerName" | "customerEmail";
-type FieldErrors = Partial<Record<Field, string>>;
 
 const fieldIds: Record<Field, string> = {
   message: "message",
@@ -69,55 +68,33 @@ export default function ReviewForm({
   productDetails: ProductProps;
 }) {
   const router = useRouter();
-  const rating = useAtomValue(ratingAtom);
-  const [message, setMessage] = useState("");
-  const [customerName, setCustomerName] = useState("");
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [customerImage, setCustomerImage] = useState("");
   const [imageName, setImageName] = useState("");
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const clearError = (field: Field) =>
-    setErrors((prev) => ({ ...prev, [field]: undefined }));
-
-  const handleReviewSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-
-    const review = {
+  const {
+    register,
+    control,
+    setValue,
+    setError,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = useForm<NewReviewType>({
+    resolver: zodResolver(newReviewSchema),
+    defaultValues: {
       id: productDetails.id,
-      message,
-      customerName,
-      customerEmail,
-      customerImage,
-      rating,
-    };
-    const result = newReviewSchema.safeParse(review);
+      message: "",
+      customerName: "",
+      customerEmail: "",
+      customerImage: "",
+      rating: 5,
+    },
+  });
 
-    if (!result.success) {
-      const fieldErrors: FieldErrors = {};
-
-      for (const issue of result.error.issues) {
-        const field = issue.path[0] as Field;
-        fieldErrors[field] ??= issue.message;
-      }
-
-      setErrors(fieldErrors);
-
-      const firstInvalid = (Object.keys(fieldIds) as Field[]).find(
-        (field) => fieldErrors[field]
-      );
-      if (firstInvalid) {
-        document.getElementById(fieldIds[firstInvalid])?.focus();
-      } else {
-        toast.error(result.error.issues[0].message);
-      }
-      return;
+  const onInvalid = (fieldErrors: FieldErrors<NewReviewType>) => {
+    if (fieldErrors.customerImage?.message) {
+      toast.error(fieldErrors.customerImage.message);
     }
+  };
 
-    setErrors({});
-    setIsSubmitting(true);
+  const onSubmit = async (review: NewReviewType) => {
     const toastId = toast.loading("Loading...");
 
     try {
@@ -132,17 +109,16 @@ export default function ReviewForm({
     } catch (err) {
       toast.dismiss(toastId);
 
-      if (err instanceof AxiosError) {
-        toast.error(
-          err.response?.data?.message ??
-            "Could not send your review. Try again."
-        );
-      } else {
-        toast.error("An unexpected error occurred");
-      }
-    }
+      const message =
+        err instanceof AxiosError
+          ? (err.response?.data?.message ??
+            "Could not send your review. Try again.")
+          : "An unexpected error occurred";
 
-    setIsSubmitting(false);
+      toast.error(message);
+      // A root error keeps isSubmitSuccessful false, so the button unlocks for a retry.
+      setError("root", { message });
+    }
   };
 
   return (
@@ -156,7 +132,7 @@ export default function ReviewForm({
           {productDetails.message}
         </p>
 
-        <form onSubmit={handleReviewSubmit} noValidate>
+        <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate>
           <Label htmlFor="message">
             Message <RequiredMark />
           </Label>
@@ -164,14 +140,10 @@ export default function ReviewForm({
             className="mt-1.5 mb-3 resize-none aria-invalid:border-red-500"
             id="message"
             required
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-              clearError("message");
-            }}
-            {...invalidProps("message", errors.message)}
+            {...register("message")}
+            {...invalidProps("message", errors.message?.message)}
           />
-          <FieldError field="message" error={errors.message} />
+          <FieldError field="message" error={errors.message?.message} />
 
           <Label htmlFor="name">
             Your name <RequiredMark />
@@ -180,14 +152,13 @@ export default function ReviewForm({
             className="mt-1.5 mb-3 aria-invalid:border-red-500"
             id="name"
             required
-            value={customerName}
-            onChange={(e) => {
-              setCustomerName(e.target.value);
-              clearError("customerName");
-            }}
-            {...invalidProps("customerName", errors.customerName)}
+            {...register("customerName")}
+            {...invalidProps("customerName", errors.customerName?.message)}
           />
-          <FieldError field="customerName" error={errors.customerName} />
+          <FieldError
+            field="customerName"
+            error={errors.customerName?.message}
+          />
 
           <Label htmlFor="email">
             Your email <RequiredMark />
@@ -197,14 +168,13 @@ export default function ReviewForm({
             id="email"
             required
             type="email"
-            value={customerEmail}
-            onChange={(e) => {
-              setCustomerEmail(e.target.value);
-              clearError("customerEmail");
-            }}
-            {...invalidProps("customerEmail", errors.customerEmail)}
+            {...register("customerEmail")}
+            {...invalidProps("customerEmail", errors.customerEmail?.message)}
           />
-          <FieldError field="customerEmail" error={errors.customerEmail} />
+          <FieldError
+            field="customerEmail"
+            error={errors.customerEmail?.message}
+          />
 
           <Label className="block">
             Profile picture{" "}
@@ -221,11 +191,11 @@ export default function ReviewForm({
             classNameUploader="my-config"
             className="my-2 mr-3 inline-block"
             onFileUploadSuccess={(e) => {
-              setCustomerImage(e.cdnUrl);
+              setValue("customerImage", e.cdnUrl);
               setImageName(e.name);
             }}
             onFileRemoved={() => {
-              setCustomerImage("");
+              setValue("customerImage", "");
               setImageName("");
             }}
           />
@@ -234,14 +204,26 @@ export default function ReviewForm({
           <Label className="mt-2 block" id="rating-label">
             Rating <RequiredMark />
           </Label>
-          <StarRating labelledBy="rating-label" />
+          <Controller
+            control={control}
+            name="rating"
+            render={({ field }) => (
+              <StarRating
+                value={field.value}
+                onChange={field.onChange}
+                labelledBy="rating-label"
+              />
+            )}
+          />
 
           <Button
             className="mt-6 h-11 w-full"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isSubmitSuccessful}
           >
-            {isSubmitting ? "Submitting..." : "Submit review"}
+            {isSubmitting || isSubmitSuccessful
+              ? "Submitting..."
+              : "Submit review"}
           </Button>
         </form>
       </section>

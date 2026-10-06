@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
+    "@hookform/resolvers": "^5.9.1",
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "7.10.0",
     "@uploadcare/react-uploader": "^1.17.0",
@@ -36,6 +37,7 @@
     "next-auth": "5.0.0-beta.32",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-hook-form": "^7.89.0",
     "react-spinners": "^0.17.1",
     "react-syntax-highlighter": "^16.1.1",
     "recharts": "^3.10.1",

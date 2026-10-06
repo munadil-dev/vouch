@@ -2,8 +2,9 @@
 
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { SubmitEvent, useState } from "react";
-import { flushSync } from "react-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -19,9 +20,11 @@ import {
 } from "@/components/ui/dialog";
 import { newProductSchema, NewProductType } from "@/schemas/new-product";
 
-type Field = keyof NewProductType;
-
-const fields: { id: Field; label: string; multiline?: boolean }[] = [
+const fields: {
+  id: keyof NewProductType;
+  label: string;
+  multiline?: boolean;
+}[] = [
   { id: "name", label: "Product name" },
   { id: "title", label: "Page title" },
   { id: "message", label: "Message", multiline: true },
@@ -88,35 +91,24 @@ function EditProductForm({
   setIsSaving: (isSaving: boolean) => void;
   onSaved: (saved: NewProductType) => void;
 }) {
-  const [product, setProduct] = useState(values);
-  const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewProductType>({
+    resolver: zodResolver(newProductSchema),
+    defaultValues: values,
+  });
 
-    const result = newProductSchema.safeParse(product);
-
-    if (!result.success) {
-      const fieldErrors: Partial<Record<Field, string>> = {};
-
-      for (const issue of result.error.issues) {
-        fieldErrors[issue.path[0] as Field] ??= issue.message;
-      }
-
-      flushSync(() => setErrors(fieldErrors));
-
-      const firstInvalid = fields.find((field) => fieldErrors[field.id]);
-      document.getElementById(`edit-${firstInvalid?.id}`)?.focus();
-      return;
-    }
-
+  const onSubmit = async (product: NewProductType) => {
     setIsSaving(true);
 
     try {
-      const res = await axios.patch(`/api/product/${productId}`, result.data);
+      const res = await axios.patch(`/api/product/${productId}`, product);
 
       if (res.data.success) {
         toast.success(res.data.message);
-        onSaved(result.data);
+        onSaved(product);
       }
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -133,24 +125,15 @@ function EditProductForm({
   };
 
   return (
-    <form className="mt-6" onSubmit={handleSubmit} noValidate>
+    <form className="mt-6" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="flex flex-col gap-5">
         {fields.map((field) => {
           const id = `edit-${field.id}`;
-          const error = errors[field.id];
+          const error = errors[field.id]?.message;
 
           const inputProps = {
+            ...register(field.id),
             id,
-            value: product[field.id],
-            onChange: (
-              e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-            ) => {
-              setProduct((current) => ({
-                ...current,
-                [field.id]: e.target.value,
-              }));
-              setErrors((current) => ({ ...current, [field.id]: undefined }));
-            },
             "aria-required": true,
             "aria-invalid": error ? true : undefined,
             "aria-describedby": error ? `${id}-error` : undefined,

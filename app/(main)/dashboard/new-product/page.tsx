@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { useAtom } from "jotai";
-
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import BackLink from "@/components/shared/back-link";
@@ -10,6 +11,7 @@ import ProductForm from "@/components/product/product-form";
 import ProductPreview from "@/components/product/product-preview";
 import ProductCreated from "@/components/product/product-created";
 import { createdProductAtom } from "@/store/atoms/created-product";
+import { newProductSchema, NewProductType } from "@/schemas/new-product";
 
 export default function NewProduct() {
   const router = useRouter();
@@ -22,6 +24,11 @@ export default function NewProduct() {
   }, [session?.user, status, router]);
 
   const [createdProduct, setCreatedProduct] = useAtom(createdProductAtom);
+
+  const form = useForm<NewProductType>({
+    resolver: zodResolver(newProductSchema),
+    defaultValues: { name: "", title: "", message: "" },
+  });
 
   useEffect(() => {
     return () => setCreatedProduct(null);
@@ -46,10 +53,10 @@ export default function NewProduct() {
             share it as soon as it&apos;s created.
           </p>
 
-          <ProductForm />
+          <ProductForm form={form} />
         </section>
 
-        <ProductPreview />
+        <ProductPreview control={form.control} />
       </div>
     </main>
   );

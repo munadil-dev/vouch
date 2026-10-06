@@ -32,3 +32,5 @@ export const newReviewSchema = z.object({
     .min(1, "Rating must be between 1 and 5")
     .max(5, "Rating must be between 1 and 5"),
 });
+
+export type NewReviewType = z.infer<typeof newReviewSchema>;

@@ -30,7 +30,10 @@ const fieldIds: Record<Field, string> = {
   customerEmail: "email",
 };
 
-function FieldError({ field, error }: { field: Field; error?: string }) {
+type Errors = FieldErrors<NewReviewType>;
+
+function FieldError({ field, errors }: { field: Field; errors: Errors }) {
+  const error = errors[field]?.message;
   if (!error) return null;
 
   return (
@@ -51,9 +54,9 @@ function RequiredMark() {
   );
 }
 
-const invalidProps = (field: Field, error?: string) => ({
-  "aria-invalid": error ? true : undefined,
-  "aria-describedby": error ? `${fieldIds[field]}-error` : undefined,
+const invalidProps = (field: Field, errors: Errors) => ({
+  "aria-invalid": errors[field] ? true : undefined,
+  "aria-describedby": errors[field] ? `${fieldIds[field]}-error` : undefined,
 });
 
 interface ProductProps {
@@ -88,7 +91,9 @@ export default function ReviewForm({
     },
   });
 
-  const onInvalid = (fieldErrors: FieldErrors<NewReviewType>) => {
+  const busy = isSubmitting || isSubmitSuccessful;
+
+  const onInvalid = (fieldErrors: Errors) => {
     if (fieldErrors.customerImage?.message) {
       toast.error(fieldErrors.customerImage.message);
     }
@@ -141,9 +146,9 @@ export default function ReviewForm({
             id="message"
             required
             {...register("message")}
-            {...invalidProps("message", errors.message?.message)}
+            {...invalidProps("message", errors)}
           />
-          <FieldError field="message" error={errors.message?.message} />
+          <FieldError field="message" errors={errors} />
 
           <Label htmlFor="name">
             Your name <RequiredMark />
@@ -153,12 +158,9 @@ export default function ReviewForm({
             id="name"
             required
             {...register("customerName")}
-            {...invalidProps("customerName", errors.customerName?.message)}
+            {...invalidProps("customerName", errors)}
           />
-          <FieldError
-            field="customerName"
-            error={errors.customerName?.message}
-          />
+          <FieldError field="customerName" errors={errors} />
 
           <Label htmlFor="email">
             Your email <RequiredMark />
@@ -169,12 +171,9 @@ export default function ReviewForm({
             required
             type="email"
             {...register("customerEmail")}
-            {...invalidProps("customerEmail", errors.customerEmail?.message)}
+            {...invalidProps("customerEmail", errors)}
           />
-          <FieldError
-            field="customerEmail"
-            error={errors.customerEmail?.message}
-          />
+          <FieldError field="customerEmail" errors={errors} />
 
           <Label className="block">
             Profile picture{" "}
@@ -216,14 +215,8 @@ export default function ReviewForm({
             )}
           />
 
-          <Button
-            className="mt-6 h-11 w-full"
-            type="submit"
-            disabled={isSubmitting || isSubmitSuccessful}
-          >
-            {isSubmitting || isSubmitSuccessful
-              ? "Submitting..."
-              : "Submit review"}
+          <Button className="mt-6 h-11 w-full" type="submit" disabled={busy}>
+            {busy ? "Submitting..." : "Submit review"}
           </Button>
         </form>
       </section>

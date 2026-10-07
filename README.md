@@ -60,7 +60,7 @@ Only reviews you mark as a favorite are shown. The CDN caches responses for 2 mi
 | Data       | [PostgreSQL](https://www.postgresql.org/), [Prisma 7](https://www.prisma.io/)                                                 |
 | Auth       | [Auth.js](https://authjs.dev/) with Google                                                                                    |
 | Validation | [Zod 4](https://zod.dev/)                                                                                                     |
-| State      | [Jotai](https://jotai.org/)                                                                                                   |
+| Forms      | [React Hook Form](https://react-hook-form.com/)                                                                               |
 | Uploads    | [Uploadcare](https://uploadcare.com/)                                                                                         |
 | Testing    | [Vitest](https://vitest.dev/), [Testing Library](https://testing-library.com/)                                                |
 | CI         | GitHub Actions (format check, tests, build)                                                                                   |
@@ -157,7 +157,6 @@ content/docs/               Documentation pages in MDX
 lib/                        Auth, database client, docs source, utilities
 prisma/                     Schema and migrations
 schemas/                    Zod schemas shared by client and server
-store/                      Jotai atoms
 ```
 
 ## Testing

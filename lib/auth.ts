@@ -2,22 +2,9 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import prisma from "./db";
 
-interface GoogleProviderOptions {
-  clientId: string;
-  clientSecret: string;
-}
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    } as GoogleProviderOptions),
-  ],
-  secret: process.env.AUTH_SECRET,
-  session: {
-    strategy: "jwt",
-  },
+  // Auth.js reads AUTH_SECRET and AUTH_GOOGLE_ID/AUTH_GOOGLE_SECRET from env.
+  providers: [Google],
   pages: {
     signIn: "/auth/signin",
   },
@@ -28,21 +15,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return false;
         }
 
-        const existingUser = await prisma.user.findUnique({
-          where: {
+        await prisma.user.upsert({
+          where: { email: user.email! },
+          update: {},
+          create: {
+            name: user.name!,
             email: user.email!,
+            image: user.image!,
           },
         });
-
-        if (!existingUser) {
-          await prisma.user.create({
-            data: {
-              name: user.name!,
-              email: user.email!,
-              image: user.image!,
-            },
-          });
-        }
 
         return true;
       } catch (err) {

@@ -1,15 +1,11 @@
-"use client";
-
-import { HashLoader } from "react-spinners";
+import { LoaderCircle } from "lucide-react";
 
 export default function Loader() {
   return (
-    <HashLoader
-      size={40}
-      color="#3e63dd"
-      aria-label="Loading Spinner"
-      data-testid="loader"
-      speedMultiplier={2}
+    <LoaderCircle
+      role="status"
+      aria-label="Loading"
+      className="text-primary size-10 animate-spin"
     />
   );
 }

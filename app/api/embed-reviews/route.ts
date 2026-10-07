@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { fail } from "@/lib/api";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -6,10 +7,7 @@ export async function GET(req: NextRequest) {
   const productId = url.searchParams.get("productId");
 
   if (!productId) {
-    return NextResponse.json(
-      { message: "Product ID is required", success: false },
-      { status: 400 }
-    );
+    return fail("Product ID is required", 400);
   }
 
   let reviews;
@@ -64,12 +62,9 @@ export async function GET(req: NextRequest) {
 
       embedReviewsDiv.setAttribute("role", "list");
       embedReviewsDiv.setAttribute("aria-label", "Customer reviews");
-      embedReviewsDiv.style.display = "flex";
-      embedReviewsDiv.style.gap = "16px";
-      embedReviewsDiv.style.padding = "10px";
-      embedReviewsDiv.style.flexWrap = "wrap";
-      embedReviewsDiv.style.justifyContent = "center";
-      embedReviewsDiv.style.fontFamily = "sans-serif";
+      // Append so inline styles the host page set on this div are kept.
+      embedReviewsDiv.style.cssText +=
+        ";display:flex;gap:16px;padding:10px;flex-wrap:wrap;justify-content:center;font-family:sans-serif";
 
       reviews.forEach(review => {
         // Create Elements
@@ -81,8 +76,7 @@ export async function GET(req: NextRequest) {
         
         // Star Rating
         const starsDiv = document.createElement("div");
-        starsDiv.style.display = "flex";
-        starsDiv.style.gap = "2px";
+        starsDiv.style.cssText = "display:flex;gap:2px";
         starsDiv.setAttribute("role", "img");
         starsDiv.setAttribute("aria-label", "Rated " + review.rating + " out of 5");
         
@@ -97,31 +91,21 @@ export async function GET(req: NextRequest) {
         }
 
         // Styles
-        innerDiv.style.display = "flex";
-        innerDiv.style.alignItems = "center";
-        innerDiv.style.gap = "10px";
+        innerDiv.style.cssText = "display:flex;align-items:center;gap:10px";
 
         outerDiv.setAttribute("role", "listitem");
-        outerDiv.style.width = "220px";
-        outerDiv.style.display = "flex";
-        outerDiv.style.flexDirection = "column";
-        outerDiv.style.gap = "16px";
-        outerDiv.style.padding = "12px";
-        outerDiv.style.border = "1px solid rgba(128, 128, 128, 0.35)";
-        outerDiv.style.borderRadius = "7px";
+        outerDiv.style.cssText =
+          "width:220px;display:flex;flex-direction:column;gap:16px;padding:12px;border:1px solid rgba(128, 128, 128, 0.35);border-radius:7px";
 
         img.alt = "";
         img.width = 35;
         img.height = 35;
         img.setAttribute("loading", "lazy");
         img.setAttribute("decoding", "async");
-        img.style.objectFit = "cover";
-        img.style.borderRadius = "500px";
+        img.style.cssText = "object-fit:cover;border-radius:500px";
         
-        nameP.style.fontWeight = 600;
-        nameP.style.margin = 0;
-
-        msgP.style.margin = 0;
+        nameP.style.cssText = "font-weight:600;margin:0";
+        msgP.style.cssText = "margin:0";
 
         // Content
         img.src = review.customerImage || "${process.env.NEXT_PUBLIC_BASE_URL}user-icon.png";

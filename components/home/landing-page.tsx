@@ -22,6 +22,7 @@ import { Scene } from "./scene";
 import {
   CopyLink,
   CopySnippet,
+  EmbedLine,
   KeyboardRating,
   TypingText,
 } from "./interactive";
@@ -305,28 +306,6 @@ function EmailMock() {
       </article>
       <CopyLink href={demoReviewUrl} display="vouch.munadil.com/cm0w1y…" />
     </div>
-  );
-}
-
-function EmbedLine({
-  tag,
-  attr,
-  children,
-}: {
-  tag: string;
-  attr: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <>
-      <span className="text-zinc-500">&lt;</span>
-      <span className="text-sky-300">{tag}</span>{" "}
-      <span className="text-violet-300">{attr}</span>=
-      <span className="text-amber-200">&quot;{children}&quot;</span>
-      <span className="text-zinc-500">&gt;&lt;/</span>
-      <span className="text-sky-300">{tag}</span>
-      <span className="text-zinc-500">&gt;</span>
-    </>
   );
 }
 

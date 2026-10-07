@@ -16,28 +16,12 @@ export default async function Product({
 }) {
   const { productId } = await params;
   const session = await auth();
-  const code = `<div id="embed-reviews"></div>
-<script src="${process.env.NEXT_PUBLIC_BASE_URL}api/embed-reviews?productId=${productId}"></script>`;
-
   if (!session?.user?.id) {
     redirect("/auth/signin");
   }
 
-  const user = await prisma.product.findUnique({
-    where: { id: productId },
-    select: { userId: true },
-  });
-
-  if (!user) {
-    notFound();
-  }
-
-  if (session.user.id !== user.userId) {
-    redirect("/");
-  }
-
   const productDetails = await prisma.product.findUnique({
-    where: { id: productId },
+    where: { id: productId, userId: session.user.id },
     select: {
       name: true,
       reviews: {
@@ -98,7 +82,7 @@ export default async function Product({
 
         <ShareSection
           url={productReviewURL}
-          code={code}
+          embedSrc={`${process.env.NEXT_PUBLIC_BASE_URL}api/embed-reviews?productId=${productId}`}
           defaultOpen={!hasReview}
         />
       </div>

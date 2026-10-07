@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { Button, buttonVariants } from "@/components/ui/button";
 import SuccessIcon from "@/components/shared/success-icon";
+import { useCopy } from "@/components/home/interactive";
 
 export default function ProductCreated({
   id,
@@ -13,24 +12,8 @@ export default function ProductCreated({
   id: string;
   name: string;
 }) {
-  const [copied, setCopied] = useState(false);
   const link = `${process.env.NEXT_PUBLIC_BASE_URL}${id}`;
-
-  useEffect(() => {
-    if (!copied) return;
-
-    const timeout = setTimeout(() => setCopied(false), 2000);
-    return () => clearTimeout(timeout);
-  }, [copied]);
-
-  const copyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(link);
-      setCopied(true);
-    } catch {
-      toast.error("Couldn't copy the link");
-    }
-  };
+  const [copied, copyLink] = useCopy(link);
 
   return (
     <main className="flex min-h-[calc(100svh-3.5rem)] items-center justify-center px-5 py-12">

@@ -10,15 +10,8 @@ import { ease } from "@/lib/constant/ui.constant";
 import { typedReplies } from "@/lib/constant/landing.constant";
 import { WindowDots } from "./window-dots";
 
-export function CopyButton({
-  value,
-  label,
-  className,
-}: {
-  value: string;
-  label: string;
-  className?: string;
-}) {
+/** Copies `value` on call; `copied` stays true for 2s so the button can confirm. */
+export function useCopy(value: string) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -28,7 +21,7 @@ export function CopyButton({
     return () => clearTimeout(timeoutId);
   }, [copied]);
 
-  const handleCopy = async () => {
+  const copy = async () => {
     try {
       await navigator.clipboard.writeText(value);
       setCopied(true);
@@ -36,6 +29,20 @@ export function CopyButton({
       toast.error("Could not copy. Select and copy it manually.");
     }
   };
+
+  return [copied, copy] as const;
+}
+
+export function CopyButton({
+  value,
+  label,
+  className,
+}: {
+  value: string;
+  label: string;
+  className?: string;
+}) {
+  const [copied, handleCopy] = useCopy(value);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -90,6 +97,28 @@ export function CopySnippet({
         <code>{children}</code>
       </pre>
     </figure>
+  );
+}
+
+export function EmbedLine({
+  tag,
+  attr,
+  children,
+}: {
+  tag: string;
+  attr: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <span className="text-zinc-500">&lt;</span>
+      <span className="text-sky-300">{tag}</span>{" "}
+      <span className="text-violet-300">{attr}</span>=
+      <span className="text-amber-200">&quot;{children}&quot;</span>
+      <span className="text-zinc-500">&gt;&lt;/</span>
+      <span className="text-sky-300">{tag}</span>
+      <span className="text-zinc-500">&gt;</span>
+    </>
   );
 }
 

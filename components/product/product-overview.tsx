@@ -1,31 +1,13 @@
 "use client";
 
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
 import { Check, ChevronDown, Copy, ExternalLink, Star } from "lucide-react";
-import CodeComponent from "./code";
+import { CopySnippet, EmbedLine, useCopy } from "@/components/home/interactive";
 import { Stars } from "@/components/home/stars";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { averageRating, formatRating } from "@/lib/review-stats";
 
 export function ProductActions({ url }: { url: string }) {
-  const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    if (!copied) return;
-    const timeoutId = setTimeout(() => setCopied(false), 2000);
-
-    return () => clearTimeout(timeoutId);
-  }, [copied]);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-    } catch {
-      toast.error("Could not copy. Select and copy it manually.");
-    }
-  };
+  const [copied, handleCopy] = useCopy(url);
 
   return (
     <div className="flex gap-2">
@@ -106,13 +88,16 @@ export function RatingSummary({ reviews }: { reviews: { rating: number }[] }) {
 
 export function ShareSection({
   url,
-  code,
+  embedSrc,
   defaultOpen,
 }: {
   url: string;
-  code: string;
+  embedSrc: string;
   defaultOpen: boolean;
 }) {
+  const code = `<div id="embed-reviews"></div>
+<script src="${embedSrc}"></script>`;
+
   return (
     <details
       open={defaultOpen}
@@ -159,7 +144,17 @@ export function ShareSection({
             Paste this where your favorites should appear.
           </p>
 
-          <CodeComponent code={code} />
+          <div className="mt-4">
+            <CopySnippet code={code}>
+              <EmbedLine tag="div" attr="id">
+                embed-reviews
+              </EmbedLine>
+              {"\n"}
+              <EmbedLine tag="script" attr="src">
+                {embedSrc}
+              </EmbedLine>
+            </CopySnippet>
+          </div>
         </div>
       </div>
     </details>

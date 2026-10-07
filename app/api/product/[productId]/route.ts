@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { fail } from "@/lib/api";
 import { auth } from "@/lib/auth";
 import { type NextRequest, NextResponse } from "next/server";
 import { newProductSchema } from "@/schemas/new-product";
@@ -9,10 +10,7 @@ export async function PATCH(req: NextRequest, { params }: Context) {
   const session = await auth();
 
   if (!session?.user?.id) {
-    return NextResponse.json(
-      { message: "Unauthenticated", success: false },
-      { status: 401 }
-    );
+    return fail("Unauthenticated", 401);
   }
 
   const { productId } = await params;
@@ -20,10 +18,7 @@ export async function PATCH(req: NextRequest, { params }: Context) {
   const { success, error, data } = newProductSchema.safeParse(body);
 
   if (!success) {
-    return NextResponse.json(
-      { message: error.issues[0].message, success: false },
-      { status: 400 }
-    );
+    return fail(error.issues[0].message, 400);
   }
 
   const { name, title, message } = data;
@@ -35,22 +30,13 @@ export async function PATCH(req: NextRequest, { params }: Context) {
     });
 
     if (count === 0) {
-      return NextResponse.json(
-        { message: "Product not found", success: false },
-        { status: 404 }
-      );
+      return fail("Product not found", 404);
     }
 
-    return NextResponse.json(
-      { message: "Product updated", success: true },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "Product updated", success: true });
   } catch (err) {
     console.log("Error while updating a product: ", err);
-    return NextResponse.json(
-      { message: "Internal server error", success: false },
-      { status: 500 }
-    );
+    return fail("Internal server error", 500);
   }
 }
 
@@ -58,10 +44,7 @@ export async function DELETE(_req: NextRequest, { params }: Context) {
   const session = await auth();
 
   if (!session?.user?.id) {
-    return NextResponse.json(
-      { message: "Unauthenticated", success: false },
-      { status: 401 }
-    );
+    return fail("Unauthenticated", 401);
   }
 
   const { productId } = await params;
@@ -72,21 +55,15 @@ export async function DELETE(_req: NextRequest, { params }: Context) {
     });
 
     if (count === 0) {
-      return NextResponse.json(
-        { message: "Product not found", success: false },
-        { status: 404 }
-      );
+      return fail("Product not found", 404);
     }
 
-    return NextResponse.json(
-      { message: "Product deleted successfully", success: true },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      message: "Product deleted successfully",
+      success: true,
+    });
   } catch (err) {
     console.log("Error while deleting a product: ", err);
-    return NextResponse.json(
-      { message: "Internal server error", success: false },
-      { status: 500 }
-    );
+    return fail("Internal server error", 500);
   }
 }

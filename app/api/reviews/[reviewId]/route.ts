@@ -1,32 +1,22 @@
 import prisma from "@/lib/db";
+import { fail } from "@/lib/api";
 import { auth } from "@/lib/auth";
 import { type NextRequest, NextResponse } from "next/server";
 
 type Context = { params: Promise<{ reviewId: string }> };
 
-const MESSAGE = {
-  ADD: "Added to favorite",
-  REMOVE: "Removed from favorite",
-};
-
 export async function PATCH(req: NextRequest, { params }: Context) {
   const session = await auth();
 
   if (!session?.user?.id) {
-    return NextResponse.json(
-      { message: "Unauthenticated", success: false },
-      { status: 401 }
-    );
+    return fail("Unauthenticated", 401);
   }
 
   const { reviewId } = await params;
   const body = await req.json().catch(() => null);
 
   if (typeof body?.isFavorite !== "boolean") {
-    return NextResponse.json(
-      { message: "isFavorite must be a boolean", success: false },
-      { status: 400 }
-    );
+    return fail("isFavorite must be a boolean", 400);
   }
 
   try {
@@ -41,25 +31,16 @@ export async function PATCH(req: NextRequest, { params }: Context) {
     });
 
     if (count === 0) {
-      return NextResponse.json(
-        { message: "Review not found", success: false },
-        { status: 404 }
-      );
+      return fail("Review not found", 404);
     }
 
-    return NextResponse.json(
-      {
-        message: `${body.isFavorite ? MESSAGE.ADD : MESSAGE.REMOVE}`,
-        success: true,
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      message: body.isFavorite ? "Added to favorite" : "Removed from favorite",
+      success: true,
+    });
   } catch (err) {
     console.error("Error while favoriting a review: ", err);
-    return NextResponse.json(
-      { message: "Internal server error", success: false },
-      { status: 500 }
-    );
+    return fail("Internal server error", 500);
   }
 }
 
@@ -67,10 +48,7 @@ export async function DELETE(_req: NextRequest, { params }: Context) {
   const session = await auth();
 
   if (!session?.user?.id) {
-    return NextResponse.json(
-      { message: "Unauthenticated", success: false },
-      { status: 401 }
-    );
+    return fail("Unauthenticated", 401);
   }
 
   const { reviewId } = await params;
@@ -84,21 +62,15 @@ export async function DELETE(_req: NextRequest, { params }: Context) {
     });
 
     if (count === 0) {
-      return NextResponse.json(
-        { message: "Review not found", success: false },
-        { status: 404 }
-      );
+      return fail("Review not found", 404);
     }
 
-    return NextResponse.json(
-      { message: "Review deleted successfully", success: true },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      message: "Review deleted successfully",
+      success: true,
+    });
   } catch (err) {
     console.error("Error while deleting a review: ", err);
-    return NextResponse.json(
-      { message: "Internal server error", success: false },
-      { status: 500 }
-    );
+    return fail("Internal server error", 500);
   }
 }

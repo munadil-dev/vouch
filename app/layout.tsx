@@ -2,7 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 
-import Providers from "@/components/layout/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -39,11 +38,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${instrumentSerif.variable}`}>
-        <Providers>
-          {children}
-          <Toaster position="top-right" richColors={true} />
-          <Analytics />
-        </Providers>
+        {children}
+        <Toaster position="top-right" richColors={true} />
+        <Analytics />
       </body>
     </html>
   );

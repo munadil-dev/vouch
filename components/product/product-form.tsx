@@ -2,13 +2,11 @@
 
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { useSetAtom } from "jotai";
 import type { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { createdProductAtom } from "@/store/atoms/created-product";
 import type { NewProductType } from "@/schemas/new-product";
 
 const fields: {
@@ -41,10 +39,11 @@ const fields: {
 
 export default function ProductForm({
   form,
+  onCreated,
 }: {
   form: UseFormReturn<NewProductType>;
+  onCreated: (product: { id: string; name: string }) => void;
 }) {
-  const setCreatedProduct = useSetAtom(createdProductAtom);
   const {
     register,
     handleSubmit,
@@ -58,7 +57,7 @@ export default function ProductForm({
 
       if (res.data.success) {
         toast.success(res.data.message);
-        setCreatedProduct({ id: res.data.id, name: product.name });
+        onCreated({ id: res.data.id, name: product.name });
         reset();
       }
     } catch (err) {

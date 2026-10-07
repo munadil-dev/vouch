@@ -1,38 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
-import { useAtom } from "jotai";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import BackLink from "@/components/shared/back-link";
 import ProductForm from "@/components/product/product-form";
 import ProductPreview from "@/components/product/product-preview";
 import ProductCreated from "@/components/product/product-created";
-import { createdProductAtom } from "@/store/atoms/created-product";
 import { newProductSchema, NewProductType } from "@/schemas/new-product";
 
 export default function NewProduct() {
-  const router = useRouter();
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    if (!session?.user && status === "unauthenticated") {
-      router.push("/auth/signin");
-    }
-  }, [session?.user, status, router]);
-
-  const [createdProduct, setCreatedProduct] = useAtom(createdProductAtom);
+  const [createdProduct, setCreatedProduct] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
 
   const form = useForm<NewProductType>({
     resolver: zodResolver(newProductSchema),
     defaultValues: { name: "", title: "", message: "" },
   });
-
-  useEffect(() => {
-    return () => setCreatedProduct(null);
-  }, [setCreatedProduct]);
 
   if (createdProduct) {
     return <ProductCreated {...createdProduct} />;
@@ -53,7 +39,7 @@ export default function NewProduct() {
             share it as soon as it&apos;s created.
           </p>
 
-          <ProductForm form={form} />
+          <ProductForm form={form} onCreated={setCreatedProduct} />
         </section>
 
         <ProductPreview control={form.control} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
-import axios, { AxiosError } from "axios";
+import { errorMessage, request } from "@/lib/request";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -171,24 +171,16 @@ function DeleteAlert({
     const toastId = toast.loading("Product getting deleted...");
 
     try {
-      const res = await axios.delete(`/api/product/${productId}`);
+      const data = await request(`/api/product/${productId}`, "DELETE");
 
-      if (res.data.success) {
-        toast.dismiss(toastId);
-        toast.success(res.data.message);
-        router.refresh();
-      }
+      toast.dismiss(toastId);
+      toast.success(data.message);
+      router.refresh();
     } catch (err) {
       toast.dismiss(toastId);
-
-      if (err instanceof AxiosError) {
-        toast.error(
-          err.response?.data?.message ??
-            "Could not delete the product. Try again."
-        );
-      } else {
-        toast.error("An unexpected error occurred");
-      }
+      toast.error(
+        errorMessage(err, "Could not delete the product. Try again.")
+      );
     }
   };
 

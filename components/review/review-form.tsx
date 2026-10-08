@@ -1,6 +1,6 @@
 "use client";
 
-import axios, { AxiosError } from "axios";
+import { errorMessage, request } from "@/lib/request";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -103,22 +103,18 @@ export default function ReviewForm({
     const toastId = toast.loading("Loading...");
 
     try {
-      const res = await axios.post("/api/reviews", review);
+      const data = await request("/api/reviews", "POST", review);
 
-      if (res.data.success) {
-        toast.dismiss(toastId);
-        toast.success(res.data.message);
-        router.push(`${productDetails.id}/submitted`);
-        return;
-      }
+      toast.dismiss(toastId);
+      toast.success(data.message);
+      router.push(`${productDetails.id}/submitted`);
     } catch (err) {
       toast.dismiss(toastId);
 
-      const message =
-        err instanceof AxiosError
-          ? (err.response?.data?.message ??
-            "Could not send your review. Try again.")
-          : "An unexpected error occurred";
+      const message = errorMessage(
+        err,
+        "Could not send your review. Try again."
+      );
 
       toast.error(message);
       // A root error keeps isSubmitSuccessful false, so the button unlocks for a retry.

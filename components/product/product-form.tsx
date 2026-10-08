@@ -1,6 +1,6 @@
 "use client";
 
-import axios, { AxiosError } from "axios";
+import { errorMessage, request } from "@/lib/request";
 import { toast } from "sonner";
 import type { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
@@ -53,22 +53,19 @@ export default function ProductForm({
 
   const onSubmit = async (product: NewProductType) => {
     try {
-      const res = await axios.post("/api/product", product);
+      const data = await request<{ message: string; id: string }>(
+        "/api/product",
+        "POST",
+        product
+      );
 
-      if (res.data.success) {
-        toast.success(res.data.message);
-        onCreated({ id: res.data.id, name: product.name });
-        reset();
-      }
+      toast.success(data.message);
+      onCreated({ id: data.id, name: product.name });
+      reset();
     } catch (err) {
-      if (err instanceof AxiosError) {
-        toast.error(
-          err.response?.data?.message ??
-            "Could not create the product. Try again."
-        );
-      } else {
-        toast.error("An unexpected error occurred");
-      }
+      toast.error(
+        errorMessage(err, "Could not create the product. Try again.")
+      );
     }
   };
 

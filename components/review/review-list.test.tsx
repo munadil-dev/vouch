@@ -1,6 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import axios from "axios";
 import { describe, expect, it, vi } from "vitest";
 import ReviewList from "./review-list";
 
@@ -65,7 +64,10 @@ describe("ReviewList filters", () => {
   });
 
   it("keeps an unfavorited card on the Favorites tab until the tab changes", async () => {
-    vi.spyOn(axios, "patch").mockResolvedValue({ data: { success: true } });
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response('{"success":true}', { status: 200 }))
+    );
     render(<ReviewList reviews={reviews} />);
 
     const favoritesTab = screen.getByRole("button", { name: /Favorites/ });

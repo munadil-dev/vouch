@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
-import axios, { AxiosError } from "axios";
+import { errorMessage, request } from "@/lib/request";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
@@ -41,20 +41,14 @@ export default function ReviewCard({
     onFavoriteChange(newFavorite);
 
     try {
-      await axios.patch(`/api/reviews/${review.id}`, {
+      await request(`/api/reviews/${review.id}`, "PATCH", {
         isFavorite: newFavorite,
       });
     } catch (err) {
       onFavoriteChange(isFavorite);
-
-      if (err instanceof AxiosError) {
-        toast.error(
-          err.response?.data?.message ??
-            "Could not update the favorite. Try again."
-        );
-      } else {
-        toast.error("An unexpected error occurred");
-      }
+      toast.error(
+        errorMessage(err, "Could not update the favorite. Try again.")
+      );
     } finally {
       saving.current = false;
     }
@@ -133,24 +127,14 @@ function DeleteReviewAlert({ reviewId }: { reviewId: string }) {
     const toastId = toast.loading("Removing...");
 
     try {
-      const res = await axios.delete(`/api/reviews/${reviewId}`);
+      const data = await request(`/api/reviews/${reviewId}`, "DELETE");
 
-      if (res.data.success) {
-        toast.dismiss(toastId);
-        toast.success(res.data.message);
-        router.refresh();
-      }
+      toast.dismiss(toastId);
+      toast.success(data.message);
+      router.refresh();
     } catch (err) {
       toast.dismiss(toastId);
-
-      if (err instanceof AxiosError) {
-        toast.error(
-          err.response?.data?.message ??
-            "Could not delete the review. Try again."
-        );
-      } else {
-        toast.error("An unexpected error occurred");
-      }
+      toast.error(errorMessage(err, "Could not delete the review. Try again."));
     }
   };
 

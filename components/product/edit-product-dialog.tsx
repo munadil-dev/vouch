@@ -1,6 +1,6 @@
 "use client";
 
-import axios, { AxiosError } from "axios";
+import { errorMessage, request } from "@/lib/request";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -104,21 +104,12 @@ function EditProductForm({
     setIsSaving(true);
 
     try {
-      const res = await axios.patch(`/api/product/${productId}`, product);
+      const data = await request(`/api/product/${productId}`, "PATCH", product);
 
-      if (res.data.success) {
-        toast.success(res.data.message);
-        onSaved(product);
-      }
+      toast.success(data.message);
+      onSaved(product);
     } catch (err) {
-      if (err instanceof AxiosError) {
-        toast.error(
-          err.response?.data?.message ??
-            "Could not save the product. Try again."
-        );
-      } else {
-        toast.error("An unexpected error occurred");
-      }
+      toast.error(errorMessage(err, "Could not save the product. Try again."));
     } finally {
       setIsSaving(false);
     }

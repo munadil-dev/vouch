@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import axios, { AxiosError, AxiosHeaders } from "axios";
 import { toast } from "sonner";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import ReviewForm from "./review-form";
@@ -52,14 +51,13 @@ vi.mock("sonner", () => ({
   },
 }));
 
-vi.mock("axios", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("axios")>();
+const fetchMock = vi.fn();
+vi.stubGlobal("fetch", fetchMock);
 
-  return {
-    ...actual,
-    default: { ...actual.default, post: vi.fn() },
-  };
-});
+const reply = (status: number, body: object) =>
+  new Response(JSON.stringify(body), { status });
+
+const sentReview = () => JSON.parse(fetchMock.mock.calls[0][1].body);
 
 const productDetails = {
   id: "product-1",
@@ -88,9 +86,9 @@ describe("ReviewForm", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     uploadedUrl = photoUrl;
-    vi.mocked(axios.post).mockResolvedValue({
-      data: { success: true, message: "Review submitted" },
-    });
+    fetchMock.mockImplementation(async () =>
+      reply(201, { success: true, message: "Review submitted" })
+    );
   });
 
   it("shows the product title and message", () => {
@@ -117,7 +115,11 @@ describe("ReviewForm", () => {
 
     await fillAndSubmit();
 
-    expect(axios.post).toHaveBeenCalledWith("/api/reviews", {
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/reviews",
+      expect.objectContaining({ method: "POST" })
+    );
+    expect(sentReview()).toEqual({
       id: "product-1",
       message: "Loved it",
       customerName: "Jane",
@@ -130,14 +132,8 @@ describe("ReviewForm", () => {
   });
 
   it("shows the server's error message and stays on the page", async () => {
-    vi.mocked(axios.post).mockRejectedValue(
-      new AxiosError("Bad Request", "400", undefined, undefined, {
-        status: 400,
-        statusText: "Bad Request",
-        headers: {},
-        config: { headers: new AxiosHeaders() },
-        data: { success: false, message: "Invalid email address" },
-      })
+    fetchMock.mockImplementation(async () =>
+      reply(400, { success: false, message: "Invalid email address" })
     );
     renderForm();
 
@@ -159,7 +155,7 @@ describe("ReviewForm", () => {
     expect(screen.getByText("Name is required")).toBeInTheDocument();
     expect(screen.getByText("Invalid email address")).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "Message" })).toHaveFocus();
-    expect(axios.post).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("links each error to its field", async () => {
@@ -186,7 +182,7 @@ describe("ReviewForm", () => {
       screen.getByRole("textbox", { name: "Message" })
     ).not.toHaveAttribute("aria-invalid");
     expect(screen.queryByText("Message is required")).not.toBeInTheDocument();
-    expect(axios.post).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("clears a field's error once the user edits it", async () => {
@@ -200,13 +196,15 @@ describe("ReviewForm", () => {
     expect(screen.getByText("Message is required")).toBeInTheDocument();
   });
 
-  it("shows a generic error for non-HTTP failures", async () => {
-    vi.mocked(axios.post).mockRejectedValue(new Error("boom"));
+  it("shows a fallback error when the request fails without a response", async () => {
+    fetchMock.mockRejectedValue(new TypeError("Failed to fetch"));
     renderForm();
 
     await fillAndSubmit();
 
-    expect(toast.error).toHaveBeenCalledWith("An unexpected error occurred");
+    expect(toast.error).toHaveBeenCalledWith(
+      "Could not send your review. Try again."
+    );
     expect(push).not.toHaveBeenCalled();
   });
 
@@ -217,8 +215,7 @@ describe("ReviewForm", () => {
     await fillAndSubmit();
 
     expect(screen.getByText("jane.png")).toBeInTheDocument();
-    expect(axios.post).toHaveBeenCalledWith(
-      "/api/reviews",
+    expect(sentReview()).toEqual(
       expect.objectContaining({ customerImage: photoUrl })
     );
   });
@@ -231,8 +228,7 @@ describe("ReviewForm", () => {
     await fillAndSubmit();
 
     expect(screen.queryByText("jane.png")).not.toBeInTheDocument();
-    expect(axios.post).toHaveBeenCalledWith(
-      "/api/reviews",
+    expect(sentReview()).toEqual(
       expect.objectContaining({ customerImage: "" })
     );
   });
@@ -245,6 +241,6 @@ describe("ReviewForm", () => {
     await fillAndSubmit();
 
     expect(toast.error).toHaveBeenCalledWith("Upload the photo again");
-    expect(axios.post).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });

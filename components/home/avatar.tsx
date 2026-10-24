@@ -14,9 +14,11 @@ const sizes = {
 export function Avatar({
   name,
   size = "sm",
+  decorative = true,
 }: {
   name: string;
   size?: keyof typeof sizes;
+  decorative?: boolean;
 }) {
   const tone =
     tones[
@@ -26,7 +28,7 @@ export function Avatar({
 
   return (
     <span
-      aria-hidden="true"
+      aria-hidden={decorative || undefined}
       className={`flex shrink-0 items-center justify-center rounded-lg font-semibold ${sizes[size]} ${tone}`}
     >
       {[...name][0]?.toUpperCase() ?? "?"}

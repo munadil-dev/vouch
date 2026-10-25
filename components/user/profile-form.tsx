@@ -128,7 +128,8 @@ export default function ProfileForm({ user }: ProfileFormProps) {
             id="name-hint"
             className={`mt-2 text-sm ${errors.name ? "text-red-600" : "text-zinc-500"}`}
           >
-            {errors.name?.message ?? "Shown on your dashboard and public pages."}
+            {errors.name?.message ??
+              "Shown on your dashboard and public pages."}
           </p>
         </div>
       </div>

@@ -64,7 +64,9 @@ describe("PATCH /api/user", () => {
     mockAuth.mockResolvedValue({ user: { id: "user-1" } });
     mockUpdate.mockResolvedValue({ name: "Munadil" } as never);
 
-    const res = await PATCH(createRequest({ name: "Munadil", image: photoUrl }));
+    const res = await PATCH(
+      createRequest({ name: "Munadil", image: photoUrl })
+    );
 
     expect(res.status).toBe(200);
     expect(mockUpdate).toHaveBeenCalledWith({

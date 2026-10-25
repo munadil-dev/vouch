@@ -3,8 +3,7 @@ import { updateProfileSchema } from "./update-profile";
 
 const validProfile = {
   name: "Munadil",
-  image:
-    "https://ifkueqi105.ucarecd.net/0f7c2b5e-1d3a-4c8b-9e6f-2a4b6c8d0e1f/",
+  image: "https://ifkueqi105.ucarecd.net/0f7c2b5e-1d3a-4c8b-9e6f-2a4b6c8d0e1f/",
 };
 
 describe("updateProfileSchema", () => {
@@ -21,7 +20,10 @@ describe("updateProfileSchema", () => {
   });
 
   it("rejects a blank name", () => {
-    const result = updateProfileSchema.safeParse({ ...validProfile, name: " " });
+    const result = updateProfileSchema.safeParse({
+      ...validProfile,
+      name: " ",
+    });
 
     expect(result.success).toBe(false);
     expect(result.error?.issues[0].message).toBe("Name is required");

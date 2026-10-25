@@ -38,7 +38,9 @@ export default async function SettingsPage() {
       </p>
 
       <div className="mt-8 max-w-lg">
-        <ProfileForm user={{ name: user.name ?? "", image: user.image ?? "" }} />
+        <ProfileForm
+          user={{ name: user.name ?? "", image: user.image ?? "" }}
+        />
       </div>
     </main>
   );

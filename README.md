@@ -70,7 +70,7 @@ Only reviews you mark as a favorite are shown. The CDN caches responses for 2 mi
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) 24+
-- [pnpm](https://pnpm.io/)
+- [Bun](https://bun.sh/) (the version is pinned in `package.json`)
 - A PostgreSQL database (local, [Neon](https://neon.tech/), [Supabase](https://supabase.com/), etc.)
 - A [Google OAuth client](https://console.cloud.google.com/apis/credentials) with the redirect URI `http://localhost:3000/api/auth/callback/google`
 
@@ -102,7 +102,7 @@ Only reviews you mark as a favorite are shown. The CDN caches responses for 2 mi
 3. **Install dependencies**
 
    ```bash
-   pnpm install
+   bun install
    ```
 
    This also generates the Prisma client.
@@ -110,32 +110,32 @@ Only reviews you mark as a favorite are shown. The CDN caches responses for 2 mi
 4. **Set up the database**
 
    ```bash
-   pnpm migrate:dev
+   bun run migrate:dev
    ```
 
 5. **Start the development server**
 
    ```bash
-   pnpm dev
+   bun run dev
    ```
 
    Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command                | Description                                         |
-| ---------------------- | --------------------------------------------------- |
-| `pnpm dev`             | Start the development server                        |
-| `pnpm build`           | Generate the Prisma client and build the app        |
-| `pnpm start`           | Run the production build                            |
-| `pnpm test`            | Run the test suite once                             |
-| `pnpm test:watch`      | Run tests in watch mode                             |
-| `pnpm format`          | Format the codebase with Prettier                   |
-| `pnpm format:check`    | Check formatting (runs in CI)                       |
-| `pnpm migrate:dev`     | Create and apply database migrations                |
-| `pnpm db:push`         | Push the schema to the database without a migration |
-| `pnpm prisma:generate` | Regenerate the Prisma client                        |
-| `pnpm prisma:studio`   | Open Prisma Studio to browse the database           |
+| Command                   | Description                                         |
+| ------------------------- | --------------------------------------------------- |
+| `bun run dev`             | Start the development server                        |
+| `bun run build`           | Generate the Prisma client and build the app        |
+| `bun run start`           | Run the production build                            |
+| `bun run test`            | Run the test suite once                             |
+| `bun run test:watch`      | Run tests in watch mode                             |
+| `bun run format`          | Format the codebase with Prettier                   |
+| `bun run format:check`    | Check formatting (runs in CI)                       |
+| `bun run migrate:dev`     | Create and apply database migrations                |
+| `bun run db:push`         | Push the schema to the database without a migration |
+| `bun run prisma:generate` | Regenerate the Prisma client                        |
+| `bun run prisma:studio`   | Open Prisma Studio to browse the database           |
 
 ## Project structure
 
@@ -164,7 +164,7 @@ schemas/                    Zod schemas shared by client and server
 Tests sit next to the code they cover (`*.test.ts` / `*.test.tsx`) and run with Vitest and Testing Library:
 
 ```bash
-pnpm test
+bun run test
 ```
 
 They cover the Zod schemas, the review form and star rating (including keyboard and screen reader behaviour), the review list filters, the API routes (ownership checks, status codes), the analytics helpers, storing Uploadcare photos and the embed widget, including XSS safety.
@@ -175,7 +175,7 @@ Contributions are welcome.
 
 1. Fork the repository and create a branch from `main`.
 2. Make your change and add tests where it makes sense.
-3. Run `pnpm format`, `pnpm test` and `pnpm build`.
+3. Run `bun run format`, `bun run test` and `bun run build`.
 4. Open a pull request. CI must pass before merging.
 
 For larger changes, please [open an issue](https://github.com/munadil-dev/vouch/issues) first to discuss the idea.

@@ -102,6 +102,17 @@ export default function ProfileForm({ user }: ProfileFormProps) {
               onFileUploadSuccess={(e) => setImage(e.cdnUrl)}
               onFileRemoved={() => setImage("")}
             />
+
+            {preview && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setImage("")}
+              >
+                Remove photo
+              </Button>
+            )}
           </div>
 
           <p

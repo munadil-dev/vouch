@@ -146,7 +146,10 @@ function EditProductForm({
               )}
 
               {error && (
-                <p id={`${id}-error`} className="mt-2 text-sm text-red-600">
+                <p
+                  id={`${id}-error`}
+                  className="mt-2 text-sm text-red-600 dark:text-red-400"
+                >
                   {error}
                 </p>
               )}

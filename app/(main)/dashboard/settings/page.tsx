@@ -29,11 +29,11 @@ export default async function SettingsPage() {
     <main className="mx-auto max-w-6xl px-5 py-12">
       <BackLink />
 
-      <h1 className="mt-6 text-4xl leading-[1.05] font-semibold tracking-[-0.04em] text-zinc-950">
+      <h1 className="text-foreground mt-6 text-4xl leading-[1.05] font-semibold tracking-[-0.04em]">
         Account settings
       </h1>
 
-      <p className="mt-3 text-[15px] leading-6 text-zinc-600">
+      <p className="text-muted-foreground mt-3 text-[15px] leading-6">
         Update how you appear across your dashboard and public pages.
       </p>
 

@@ -39,7 +39,7 @@ function FieldError({ field, errors }: { field: Field; errors: Errors }) {
   return (
     <p
       id={`${fieldIds[field]}-error`}
-      className="-mt-2 mb-3 text-sm text-red-500"
+      className="-mt-2 mb-3 text-sm text-red-600 dark:text-red-400"
     >
       {error}
     </p>
@@ -48,7 +48,7 @@ function FieldError({ field, errors }: { field: Field; errors: Errors }) {
 
 function RequiredMark() {
   return (
-    <span aria-hidden="true" className="text-red-500">
+    <span aria-hidden="true" className="text-red-600 dark:text-red-400">
       *
     </span>
   );
@@ -124,12 +124,12 @@ export default function ReviewForm({
 
   return (
     <main className="flex min-h-[calc(100svh-3.5rem)] items-center justify-center px-5 py-12">
-      <section className="shadow-card-raised w-full max-w-lg rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8">
-        <h1 className="text-center text-2xl font-semibold tracking-tight break-words text-zinc-950 sm:text-3xl">
+      <section className="shadow-card-raised border-border bg-card w-full max-w-lg rounded-2xl border p-6 sm:p-8">
+        <h1 className="text-foreground text-center text-2xl font-semibold tracking-tight break-words sm:text-3xl">
           {productDetails.title}
         </h1>
 
-        <p className="mt-2 mb-6 text-center text-[15px] break-words text-zinc-600">
+        <p className="text-muted-foreground mt-2 mb-6 text-center text-[15px] break-words">
           {productDetails.message}
         </p>
 
@@ -173,7 +173,9 @@ export default function ReviewForm({
 
           <Label className="block">
             Profile picture{" "}
-            <span className="font-normal text-zinc-500">(optional)</span>
+            <span className="text-muted-foreground font-normal">
+              (optional)
+            </span>
           </Label>
           <FileUploaderRegular
             pubkey={UPLOADCARE_PUBLIC_KEY}
@@ -194,7 +196,7 @@ export default function ReviewForm({
               setImageName("");
             }}
           />
-          <span className="text-sm text-zinc-600">{imageName}</span>
+          <span className="text-muted-foreground text-sm">{imageName}</span>
 
           <Label className="mt-2 block" id="rating-label">
             Rating <RequiredMark />

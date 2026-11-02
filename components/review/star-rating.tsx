@@ -35,7 +35,7 @@ export default function StarRating({
               className={`size-7 transition-colors duration-150 ${
                 starIndex <= value
                   ? "fill-amber-400 text-amber-400"
-                  : "fill-zinc-200 text-zinc-200 hover:fill-zinc-300 hover:text-zinc-300"
+                  : "fill-muted-foreground/25 text-muted-foreground/25 hover:fill-muted-foreground/45 hover:text-muted-foreground/45"
               }`}
             />
           </button>

@@ -49,11 +49,11 @@ export default function ProductCard({
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <article className="group shadow-card hover:shadow-card-raised relative flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-5 transition-[border-color,box-shadow] duration-150 hover:border-zinc-300">
+    <article className="group shadow-card hover:shadow-card-raised border-border bg-card hover:border-muted-foreground/40 relative flex h-full flex-col rounded-2xl border p-5 transition-[border-color,box-shadow] duration-150">
       <header className="flex items-start justify-between gap-3">
         <span
           aria-hidden="true"
-          className="flex size-9 items-center justify-center rounded-lg bg-zinc-950 text-sm font-semibold text-white uppercase"
+          className="bg-foreground text-background flex size-9 items-center justify-center rounded-lg text-sm font-semibold uppercase"
         >
           {[...product.name][0]}
         </span>
@@ -62,7 +62,7 @@ export default function ProductCard({
           <DropdownMenuTrigger
             ref={menuTriggerRef}
             aria-label={`Actions for ${product.name}`}
-            className="focus-visible:ring-primary relative z-10 -mt-1 -mr-1 flex size-8 cursor-pointer items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-2 focus-visible:outline-hidden"
+            className="focus-visible:ring-primary text-muted-foreground hover:bg-accent hover:text-foreground relative z-10 -mt-1 -mr-1 flex size-8 cursor-pointer items-center justify-center rounded-lg transition-colors focus-visible:ring-2 focus-visible:outline-hidden"
           >
             <MoreHorizontal className="size-4" />
           </DropdownMenuTrigger>
@@ -110,12 +110,12 @@ export default function ProductCard({
 
       <Link
         href={href}
-        className="focus-visible:after:ring-primary mt-5 rounded-sm font-semibold tracking-tight wrap-anywhere text-zinc-950 after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-hidden focus-visible:after:ring-2"
+        className="focus-visible:after:ring-primary text-foreground mt-5 rounded-sm font-semibold tracking-tight wrap-anywhere after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-hidden focus-visible:after:ring-2"
       >
         {product.name}
       </Link>
 
-      <p className="mt-1 flex items-center gap-1.5 text-sm text-zinc-500 tabular-nums">
+      <p className="text-muted-foreground mt-1 flex items-center gap-1.5 text-sm tabular-nums">
         {responses} {responses === 1 ? "response" : "responses"}
         {responses > 0 && (
           <>
@@ -134,20 +134,20 @@ export default function ProductCard({
         )}
       </p>
 
-      <p className="mt-4 line-clamp-2 flex-1 text-sm leading-6 text-zinc-600">
+      <p className="text-muted-foreground mt-4 line-clamp-2 flex-1 text-sm leading-6">
         {latestMessage
           ? `“${latestMessage}”`
           : "No reviews yet. Share your link to get the first one."}
       </p>
 
-      <footer className="mt-5 flex items-center justify-between border-t border-zinc-100 pt-3 text-xs text-zinc-500 tabular-nums">
+      <footer className="border-border text-muted-foreground mt-5 flex items-center justify-between border-t pt-3 text-xs tabular-nums">
         <span>
           {favorites} {favorites === 1 ? "favorite" : "favorites"}
         </span>
 
         <ChevronRight
           aria-hidden="true"
-          className="size-4 text-zinc-400 transition-transform duration-150 group-hover:translate-x-0.5"
+          className="text-muted-foreground size-4 transition-transform duration-150 group-hover:translate-x-0.5"
         />
       </footer>
     </article>

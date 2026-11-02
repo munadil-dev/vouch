@@ -73,7 +73,7 @@ function Hero({ startHref }: { startHref: string }) {
     <div className="relative isolate">
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 -top-14 -z-10 h-[49.5rem] bg-white mask-[radial-gradient(ellipse_75%_85%_at_50%_0%,#000_45%,transparent_100%)] sm:h-[55.5rem]"
+        className="bg-background absolute inset-x-0 -top-14 -z-10 h-[49.5rem] mask-[radial-gradient(ellipse_75%_85%_at_50%_0%,#000_45%,transparent_100%)] sm:h-[55.5rem]"
       >
         <Image
           src={skyImage}
@@ -82,15 +82,15 @@ function Hero({ startHref }: { startHref: string }) {
           priority
           placeholder="blur"
           sizes="100vw"
-          className="object-cover object-bottom opacity-45"
+          className="object-cover object-bottom opacity-45 dark:opacity-25"
         />
       </div>
       <section className="mx-auto max-w-6xl px-5 pt-16 sm:pt-24">
         <div className="flex flex-col items-center text-center">
-          <h1 className="max-w-4xl text-5xl leading-[1.02] font-semibold tracking-[-0.045em] text-balance text-zinc-950 sm:text-[5.25rem]">
+          <h1 className="text-foreground max-w-4xl text-5xl leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[5.25rem]">
             Collect testimonials. Show the ones you love.
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-7 text-pretty text-zinc-700">
+          <p className="text-muted-foreground mt-6 max-w-xl text-lg leading-7 text-pretty">
             Send customers a link, favorite the best reviews, and they appear on
             your website with two lines of HTML.
           </p>
@@ -107,7 +107,7 @@ function Hero({ startHref }: { startHref: string }) {
           </div>
         </div>
 
-        <figure className="relative isolate mt-16 overflow-hidden rounded-3xl px-3 pt-10 pb-4 shadow-[0_40px_80px_-40px_rgba(31,62,181,0.55)] sm:mt-20 sm:px-14 sm:pt-20 sm:pb-28">
+        <figure className="relative isolate mt-16 overflow-hidden rounded-3xl px-3 pt-10 pb-4 shadow-[0_40px_80px_-40px_rgba(31,62,181,0.55)] sm:mt-20 sm:px-14 sm:pt-20 sm:pb-28 dark:shadow-[0_40px_80px_-40px_rgba(0,0,0,0.85)]">
           <Scene id="hero" />
           <div className="mx-auto max-w-5xl">
             <HeroDemo />
@@ -118,12 +118,14 @@ function Hero({ startHref }: { startHref: string }) {
         </figure>
 
         <div className="mt-14 flex flex-col items-center gap-6">
-          <p className="text-sm text-zinc-500">Paste it into any site</p>
+          <p className="text-muted-foreground text-sm">
+            Paste it into any site
+          </p>
           <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
             {platforms.map((platform) => (
               <li
                 key={platform.slug}
-                className="flex items-center gap-2 text-[17px] font-semibold tracking-tight text-zinc-400"
+                className="text-muted-foreground flex items-center gap-2 text-[17px] font-semibold tracking-tight"
               >
                 <SimpleIcon slug={platform.slug} color="a1a1aa" size={20} />
                 {platform.name}
@@ -138,8 +140,8 @@ function Hero({ startHref }: { startHref: string }) {
 
 function SectionHeader({ title, body }: { title: string; body: string }) {
   return (
-    <h2 className="max-w-3xl text-3xl leading-[1.12] font-semibold tracking-[-0.03em] text-balance text-zinc-950 sm:text-[2.75rem]">
-      {title} <span className="text-zinc-400">{body}</span>
+    <h2 className="text-foreground max-w-3xl text-3xl leading-[1.12] font-semibold tracking-[-0.03em] text-balance sm:text-[2.75rem]">
+      {title} <span className="text-muted-foreground">{body}</span>
     </h2>
   );
 }
@@ -151,22 +153,22 @@ function Steps() {
         title="Live in about five minutes."
         body="Nothing to build, host or maintain."
       />
-      <ol className="mt-12 grid overflow-hidden rounded-2xl border border-zinc-200 bg-white sm:grid-cols-3">
+      <ol className="border-border bg-card mt-12 grid overflow-hidden rounded-2xl border sm:grid-cols-3">
         {steps.map((step, index) => (
           <li
             key={step.title}
-            className="border-zinc-200 p-6 not-last:border-b sm:p-8 sm:not-last:border-r sm:not-last:border-b-0"
+            className="border-border p-6 not-last:border-b sm:p-8 sm:not-last:border-r sm:not-last:border-b-0"
           >
             <span
               aria-hidden="true"
-              className="bg-primary shadow-highlight flex size-8 items-center justify-center rounded-lg text-sm font-semibold text-white tabular-nums"
+              className="bg-primary shadow-highlight text-primary-foreground flex size-8 items-center justify-center rounded-lg text-sm font-semibold tabular-nums"
             >
               {index + 1}
             </span>
-            <h3 className="mt-5 text-base font-semibold text-zinc-950">
+            <h3 className="text-foreground mt-5 text-base font-semibold">
               {step.title}
             </h3>
-            <p className="mt-1.5 text-[15px] leading-6 text-zinc-600">
+            <p className="text-muted-foreground mt-1.5 text-[15px] leading-6">
               {step.body}
             </p>
           </li>
@@ -192,7 +194,7 @@ function Cell({
   return (
     <article
       className={`relative isolate flex min-w-0 flex-col overflow-hidden rounded-2xl ${
-        blue ? "bg-primary" : "shadow-card border border-zinc-200 bg-white"
+        blue ? "bg-brand-panel" : "shadow-card border-border bg-card border"
       } ${className}`}
     >
       {blue ? (
@@ -210,20 +212,20 @@ function Cell({
       ) : (
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[radial-gradient(#d4d4d8_1px,transparent_1px)] mask-[radial-gradient(ellipse_at_bottom,#000_10%,transparent_70%)] bg-size-[16px_16px]"
+          className="absolute inset-0 -z-10 bg-[radial-gradient(hsl(var(--border))_1px,transparent_1px)] mask-[radial-gradient(ellipse_at_bottom,#000_10%,transparent_70%)] bg-size-[16px_16px]"
         />
       )}
       <header className="px-6 pt-6 sm:px-8 sm:pt-8">
         <h3
           className={`text-xl font-semibold tracking-tight ${
-            blue ? "text-white" : "text-zinc-950"
+            blue ? "text-white" : "text-foreground"
           }`}
         >
           {title}
         </h3>
         <p
           className={`mt-2 max-w-md text-[15px] leading-6 ${
-            blue ? "text-white/80" : "text-zinc-600"
+            blue ? "text-white/90" : "text-muted-foreground"
           }`}
         >
           {body}
@@ -240,7 +242,7 @@ function ProductMark() {
   return (
     <span
       aria-hidden="true"
-      className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-zinc-950 text-xs font-semibold text-white"
+      className="bg-foreground text-background flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-semibold"
     >
       P
     </span>
@@ -249,18 +251,18 @@ function ProductMark() {
 
 function FormMock() {
   return (
-    <div className="shadow-card-raised w-full max-w-md rounded-xl border border-zinc-200 bg-white p-5 sm:p-6">
+    <div className="shadow-card-raised border-border bg-card w-full max-w-md rounded-xl border p-5 sm:p-6">
       <div className="flex items-center gap-2.5">
         <ProductMark />
-        <p className="text-sm font-medium text-zinc-950">Acme</p>
+        <p className="text-foreground text-sm font-medium">Acme</p>
       </div>
-      <p className="mt-5 text-lg font-semibold tracking-tight text-zinc-950">
+      <p className="text-foreground mt-5 text-lg font-semibold tracking-tight">
         How was your first week with Acme?
       </p>
       <KeyboardRating className="mt-4" />
       <div
         aria-hidden="true"
-        className="border-primary/50 ring-primary/10 mt-4 h-20 rounded-lg border bg-white p-3 text-sm text-zinc-800 ring-4"
+        className="border-primary/50 ring-primary/10 bg-popover text-foreground mt-4 h-20 rounded-lg border p-3 text-sm ring-4"
       >
         <TypingText />
       </div>
@@ -268,11 +270,11 @@ function FormMock() {
         className="mt-4 flex items-center justify-between"
         aria-hidden="true"
       >
-        <span className="flex items-center gap-1.5 rounded-md border border-dashed border-zinc-300 px-2.5 py-1.5 text-xs text-zinc-500">
+        <span className="border-border text-muted-foreground flex items-center gap-1.5 rounded-md border border-dashed px-2.5 py-1.5 text-xs">
           <ImagePlus className="size-3.5" />
           Add a photo
         </span>
-        <span className="bg-primary shadow-highlight rounded-md px-3 py-1.5 text-xs font-medium text-white">
+        <span className="bg-primary shadow-highlight text-primary-foreground rounded-md px-3 py-1.5 text-xs font-medium">
           Submit review
         </span>
       </div>
@@ -283,16 +285,18 @@ function FormMock() {
 function EmailMock() {
   return (
     <div className="w-full space-y-3">
-      <article className="shadow-card-raised overflow-hidden rounded-xl border border-zinc-200 bg-white">
-        <header className="flex items-center gap-2.5 border-b border-zinc-100 px-4 py-3">
+      <article className="shadow-card-raised border-border bg-card overflow-hidden rounded-xl border">
+        <header className="border-border flex items-center gap-2.5 border-b px-4 py-3">
           <ProductMark />
           <div className="min-w-0 text-xs">
-            <p className="font-medium text-zinc-950">Acme</p>
-            <p className="truncate text-zinc-500">How did your order go?</p>
+            <p className="text-foreground font-medium">Acme</p>
+            <p className="text-muted-foreground truncate">
+              How did your order go?
+            </p>
           </div>
         </header>
         <div className="p-4">
-          <p className="text-sm leading-6 text-zinc-600">
+          <p className="text-muted-foreground text-sm leading-6">
             Hi Priya, got a minute? Tell us how it went.
           </p>
           <a
@@ -379,16 +383,16 @@ function Features() {
           <Link
             href={siteLinks.github}
             target="_blank"
-            className="flex w-full max-w-sm items-center gap-3 rounded-xl border border-white/15 bg-white p-4 shadow-[0_12px_32px_-12px_rgba(20,30,90,0.55)] transition-transform duration-150 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-hidden active:scale-[0.98]"
+            className="bg-background flex w-full max-w-sm items-center gap-3 rounded-xl border border-white/15 p-4 shadow-[0_12px_32px_-12px_rgba(20,30,90,0.55)] transition-transform duration-150 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-hidden active:scale-[0.98] dark:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.7)]"
           >
             <span className="[&_svg]:size-7">
               <GithubIconSVG />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-sm font-semibold text-zinc-950">
+              <span className="text-foreground block truncate text-sm font-semibold">
                 munadil-dev/vouch
               </span>
-              <span className="block text-sm text-zinc-500">
+              <span className="text-muted-foreground block text-sm">
                 Star it, fork it, run it
               </span>
             </span>
@@ -409,7 +413,7 @@ function Closing({ startHref }: { startHref: string }) {
       <h2 className="mx-auto max-w-2xl text-4xl leading-[1.05] font-semibold tracking-[-0.04em] text-balance text-white sm:text-6xl">
         Ask your first customer today
       </h2>
-      <p className="mx-auto mt-5 max-w-md text-lg leading-7 text-white/85">
+      <p className="mx-auto mt-5 max-w-md text-lg leading-7 text-white/90">
         Free to use. Sign in with Google and create a product.
       </p>
       <div className="mt-9 flex flex-wrap justify-center gap-3">

@@ -83,7 +83,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
                 src={preview}
                 alt="Your avatar"
                 onError={() => setFailed(true)}
-                className="size-16 shrink-0 rounded-full bg-zinc-100 object-cover"
+                className="bg-muted size-16 shrink-0 rounded-full object-cover"
               />
             ) : (
               <Avatar name={user.name} size="md" />
@@ -117,7 +117,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
 
           <p
             id="image-hint"
-            className={`mt-2 text-sm ${errors.image ? "text-red-600" : "text-zinc-500"}`}
+            className={`mt-2 text-sm ${errors.image ? "text-red-600 dark:text-red-400" : "text-muted-foreground"}`}
           >
             {errors.image?.message ??
               "JPG, PNG or WebP. Remove the photo to fall back to your initials."}
@@ -133,11 +133,11 @@ export default function ProfileForm({ user }: ProfileFormProps) {
             aria-required={true}
             aria-invalid={errors.name ? true : undefined}
             aria-describedby="name-hint"
-            className="mt-2 bg-white aria-invalid:border-red-500"
+            className="bg-popover mt-2 aria-invalid:border-red-500"
           />
           <p
             id="name-hint"
-            className={`mt-2 text-sm ${errors.name ? "text-red-600" : "text-zinc-500"}`}
+            className={`mt-2 text-sm ${errors.name ? "text-red-600 dark:text-red-400" : "text-muted-foreground"}`}
           >
             {errors.name?.message ??
               "Shown on your dashboard and public pages."}

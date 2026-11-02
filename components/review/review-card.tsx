@@ -55,13 +55,13 @@ export default function ReviewCard({
   };
 
   return (
-    <article className="shadow-card flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-5">
+    <article className="shadow-card border-border bg-card flex h-full flex-col rounded-2xl border p-5">
       <header className="flex items-center justify-between gap-3">
         <Stars count={review.rating} size="sm" />
 
         <time
           dateTime={createdAt.toISOString()}
-          className="text-xs text-zinc-500"
+          className="text-muted-foreground text-xs"
         >
           {createdAt.toLocaleDateString("en-us", {
             year: "numeric",
@@ -72,19 +72,19 @@ export default function ReviewCard({
         </time>
       </header>
 
-      <p className="mt-3 flex-1 text-[15px] leading-6 break-words text-zinc-800">
+      <p className="text-foreground mt-3 flex-1 text-[15px] leading-6 break-words">
         {review.message}
       </p>
 
-      <footer className="mt-5 flex items-center gap-3 border-t border-zinc-100 pt-4">
+      <footer className="border-border mt-5 flex items-center gap-3 border-t pt-4">
         <CustomerPhoto name={review.customerName} src={review.customerImage} />
 
         <p className="flex min-w-0 flex-1 flex-col text-sm">
-          <span className="truncate font-medium text-zinc-950">
+          <span className="text-foreground truncate font-medium">
             {review.customerName}
           </span>
 
-          <span className="truncate text-xs text-zinc-500">
+          <span className="text-muted-foreground truncate text-xs">
             {review.customerEmail}
           </span>
         </p>
@@ -115,7 +115,7 @@ function CustomerPhoto({ name, src }: { name: string; src: string | null }) {
       alt=""
       loading="lazy"
       onError={() => setFailed(true)}
-      className="size-9 shrink-0 rounded-lg bg-zinc-100 object-cover"
+      className="bg-muted size-9 shrink-0 rounded-lg object-cover"
     />
   );
 }
@@ -143,7 +143,7 @@ function DeleteReviewAlert({ reviewId }: { reviewId: string }) {
       description="This action cannot be undone. This will permanently delete the review from the product and remove it from our servers."
       onConfirm={removeReview}
       triggerLabel="Delete review"
-      triggerClassName="-mr-1.5 flex shrink-0 size-8 cursor-pointer items-center justify-center rounded-md text-zinc-400 transition-colors hover:bg-red-50 hover:text-red-600 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-hidden"
+      triggerClassName="-mr-1.5 flex shrink-0 size-8 cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-hidden"
     >
       <Trash2 className="size-4" />
     </DeleteDialog>

@@ -44,13 +44,13 @@ export function RatingSummary({ reviews }: { reviews: { rating: number }[] }) {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-12">
       <div>
-        <p className="text-5xl font-semibold tracking-[-0.04em] text-zinc-950 tabular-nums">
+        <p className="text-foreground text-5xl font-semibold tracking-[-0.04em] tabular-nums">
           {formatRating(average)}
         </p>
 
         <Stars count={Math.round(average)} className="mt-3" />
 
-        <p className="mt-2 text-sm text-zinc-500 tabular-nums">
+        <p className="text-muted-foreground mt-2 text-sm tabular-nums">
           {reviews.length} {reviews.length === 1 ? "response" : "responses"}
         </p>
       </div>
@@ -59,7 +59,7 @@ export function RatingSummary({ reviews }: { reviews: { rating: number }[] }) {
         {counts.map(({ rating, count }) => (
           <li
             key={rating}
-            className="flex items-center gap-3 text-sm text-zinc-600 tabular-nums"
+            className="text-muted-foreground flex items-center gap-3 text-sm tabular-nums"
           >
             <span className="flex w-7 items-center justify-end gap-1">
               {rating}
@@ -69,7 +69,7 @@ export function RatingSummary({ reviews }: { reviews: { rating: number }[] }) {
               />
             </span>
 
-            <span className="h-2.5 flex-1 overflow-hidden rounded-full bg-zinc-100">
+            <span className="bg-muted h-2.5 flex-1 overflow-hidden rounded-full">
               <span
                 className="block h-full rounded-full bg-amber-400"
                 style={{
@@ -78,7 +78,9 @@ export function RatingSummary({ reviews }: { reviews: { rating: number }[] }) {
               />
             </span>
 
-            <span className="w-6 text-right text-zinc-500">{count}</span>
+            <span className="text-muted-foreground w-6 text-right">
+              {count}
+            </span>
           </li>
         ))}
       </ul>
@@ -101,35 +103,35 @@ export function ShareSection({
   return (
     <details
       open={defaultOpen}
-      className="group shadow-card rounded-2xl border border-zinc-200 bg-white"
+      className="group shadow-card border-border bg-card rounded-2xl border"
     >
       <summary className="focus-visible:ring-primary flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-4 focus-visible:ring-2 focus-visible:outline-hidden sm:px-6 [&::-webkit-details-marker]:hidden">
         <span>
-          <span className="block font-semibold tracking-tight text-zinc-950">
+          <span className="text-foreground block font-semibold tracking-tight">
             Share and embed
           </span>
 
-          <span className="mt-0.5 block text-sm text-zinc-600">
+          <span className="text-muted-foreground mt-0.5 block text-sm">
             Your review link and the widget for your site.
           </span>
         </span>
 
         <ChevronDown
           aria-hidden="true"
-          className="size-5 shrink-0 text-zinc-400 transition-transform duration-200 group-open:rotate-180"
+          className="text-muted-foreground size-5 shrink-0 transition-transform duration-200 group-open:rotate-180"
         />
       </summary>
 
-      <div className="grid grid-cols-1 gap-6 border-t border-zinc-100 px-5 py-5 sm:px-6 lg:grid-cols-2">
+      <div className="border-border grid grid-cols-1 gap-6 border-t px-5 py-5 sm:px-6 lg:grid-cols-2">
         <div>
-          <h2 className="text-sm font-medium text-zinc-950">Review link</h2>
+          <h2 className="text-foreground text-sm font-medium">Review link</h2>
 
-          <p className="mt-1 text-sm text-zinc-600">
+          <p className="text-muted-foreground mt-1 text-sm">
             Send this to customers so they can leave a review.
           </p>
 
           <a
-            className="mt-4 block rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2.5 font-mono text-[13px] break-all text-zinc-700 transition-colors hover:border-zinc-300 hover:text-zinc-950"
+            className="border-border bg-muted text-foreground hover:border-muted-foreground/40 hover:text-foreground mt-4 block rounded-lg border px-3 py-2.5 font-mono text-[13px] break-all transition-colors"
             href={url}
             target="_blank"
           >
@@ -138,9 +140,11 @@ export function ShareSection({
         </div>
 
         <div className="min-w-0">
-          <h2 className="text-sm font-medium text-zinc-950">Website widget</h2>
+          <h2 className="text-foreground text-sm font-medium">
+            Website widget
+          </h2>
 
-          <p className="mt-1 text-sm text-zinc-600">
+          <p className="text-muted-foreground mt-1 text-sm">
             Paste this where your favorites should appear.
           </p>
 

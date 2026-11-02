@@ -22,7 +22,7 @@ export function Stars({
           className={`${size === "sm" ? "size-3.5" : "size-4"} ${
             index < count
               ? "fill-amber-400 text-amber-400"
-              : "fill-zinc-200 text-zinc-200"
+              : "fill-muted-foreground/25 text-muted-foreground/25"
           }`}
         />
       ))}

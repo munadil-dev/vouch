@@ -30,11 +30,11 @@ export default function NewProduct() {
         <section>
           <BackLink />
 
-          <h1 className="mt-6 text-4xl leading-[1.05] font-semibold tracking-[-0.04em] text-zinc-950">
+          <h1 className="text-foreground mt-6 text-4xl leading-[1.05] font-semibold tracking-[-0.04em]">
             New product
           </h1>
 
-          <p className="mt-3 text-[15px] leading-6 text-zinc-600">
+          <p className="text-muted-foreground mt-3 text-[15px] leading-6">
             Set up the page customers see when they open your link. You can
             share it as soon as it&apos;s created.
           </p>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Bar, BarChart, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import StatsBar from "./stats-bar";
 import { RatingSummary } from "./product-overview";
 import { buildDailySeries, ranges } from "@/lib/analytics";
@@ -34,8 +34,20 @@ const formatDay = (date: string) =>
   });
 
 const chartConfig = {
-  views: { label: "Views", colors: { light: ["hsl(var(--primary) / 0.2)"] } },
-  responses: { label: "Responses", colors: { light: ["hsl(var(--primary))"] } },
+  views: {
+    label: "Views",
+    colors: {
+      light: ["hsl(var(--primary) / 0.2)"],
+      dark: ["hsl(var(--primary) / 0.45)"],
+    },
+  },
+  responses: {
+    label: "Responses",
+    colors: {
+      light: ["hsl(var(--primary))"],
+      dark: ["hsl(var(--primary))"],
+    },
+  },
 } satisfies ChartConfig;
 
 export default function ProductAnalytics({
@@ -54,11 +66,11 @@ export default function ProductAnalytics({
   return (
     <section
       aria-label="Analytics"
-      className="shadow-card rounded-2xl border border-zinc-200 bg-white"
+      className="shadow-card border-border bg-card rounded-2xl border"
     >
       <div className="p-5 sm:p-6">
         <div className="flex items-center justify-between gap-4">
-          <h2 className="font-semibold tracking-tight text-zinc-950">
+          <h2 className="text-foreground font-semibold tracking-tight">
             Traffic
           </h2>
 
@@ -96,7 +108,7 @@ export default function ProductAnalytics({
         />
 
         {totalViews === 0 && totalResponses === 0 ? (
-          <p className="mt-6 flex h-32 items-center justify-center rounded-lg border border-dashed border-zinc-200 px-4 text-center text-sm text-zinc-500">
+          <p className="border-border text-muted-foreground mt-6 flex h-32 items-center justify-center rounded-lg border border-dashed px-4 text-center text-sm">
             No views in the last {range} days. Share your link to get some.
           </p>
         ) : (
@@ -110,6 +122,12 @@ export default function ProductAnalytics({
                 data={series}
                 margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
               >
+                <CartesianGrid
+                  vertical={false}
+                  stroke="hsl(var(--border))"
+                  strokeDasharray="3 3"
+                />
+
                 <XAxis dataKey="date" hide />
 
                 <XAxis dataKey="date" xAxisId="responses" hide />
@@ -117,6 +135,7 @@ export default function ProductAnalytics({
                 <ChartTooltip
                   content={
                     <ChartTooltipContent
+                      className="border-border bg-popover text-popover-foreground"
                       labelFormatter={(date) => formatDay(String(date))}
                     />
                   }
@@ -137,12 +156,12 @@ export default function ProductAnalytics({
               </BarChart>
             </ChartContainer>
 
-            <div className="mt-2 flex items-center justify-between gap-4 text-xs text-zinc-500">
+            <div className="text-muted-foreground mt-2 flex items-center justify-between gap-4 text-xs">
               <span>{formatDay(series[0].date)}</span>
 
               <span className="flex gap-4">
                 <span className="flex items-center gap-1.5">
-                  <span className="bg-primary/20 size-2 rounded-full" />
+                  <span className="bg-primary/25 dark:bg-primary/50 size-2 rounded-full" />
                   Views
                 </span>
 
@@ -159,10 +178,12 @@ export default function ProductAnalytics({
       </div>
 
       {reviews.length > 0 && (
-        <div className="border-t border-zinc-100 p-5 sm:p-6">
-          <h2 className="mb-4 font-semibold tracking-tight text-zinc-950">
+        <div className="border-border border-t p-5 sm:p-6">
+          <h2 className="text-foreground mb-4 font-semibold tracking-tight">
             Ratings{" "}
-            <span className="font-normal text-zinc-500">· all time</span>
+            <span className="text-muted-foreground font-normal">
+              · all time
+            </span>
           </h2>
 
           <RatingSummary reviews={reviews} />

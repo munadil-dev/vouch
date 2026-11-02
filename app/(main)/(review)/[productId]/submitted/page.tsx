@@ -10,20 +10,20 @@ export const metadata: Metadata = {
 export default function ReviewSubmitted() {
   return (
     <main className="flex min-h-[calc(100svh-3.5rem)] items-center justify-center px-5 py-12">
-      <section className="shadow-card-raised w-full max-w-sm rounded-2xl border border-zinc-200 bg-white p-8 text-center">
+      <section className="shadow-card-raised border-border bg-card w-full max-w-sm rounded-2xl border p-8 text-center">
         <SuccessIcon />
-        <h1 className="mt-4 text-xl font-semibold tracking-tight text-zinc-950">
+        <h1 className="text-foreground mt-4 text-xl font-semibold tracking-tight">
           Thanks for your review
         </h1>
-        <p className="mt-1 text-sm text-zinc-600">
+        <p className="text-muted-foreground mt-1 text-sm">
           Your response was sent. You can close this page.
         </p>
 
-        <p className="mt-8 text-xs text-zinc-500">
+        <p className="text-muted-foreground mt-8 text-xs">
           Powered by{" "}
           <Link
             href={process.env.NEXT_PUBLIC_BASE_URL!}
-            className="font-medium text-zinc-950 hover:underline"
+            className="text-foreground font-medium hover:underline"
           >
             Vouch
           </Link>

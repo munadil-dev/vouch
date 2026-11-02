@@ -2,6 +2,8 @@
 @import "fumadocs-ui/css/solar.css";
 @import "fumadocs-ui/css/preset.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -14,7 +16,8 @@
 
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-primary-hover: #3358d4;
+  --color-primary-hover: hsl(var(--primary-hover));
+  --color-brand-panel: hsl(var(--brand-panel));
 
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
@@ -36,14 +39,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
 
-  --shadow-card: 0 1px 2px rgba(24, 24, 27, 0.04);
-  --shadow-card-raised:
-    0 1px 2px rgba(24, 24, 27, 0.04), 0 8px 20px -8px rgba(24, 24, 27, 0.12);
-  --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  --shadow-button:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(30, 45, 110, 0.3);
-  --shadow-outline: 0 1px 2px rgba(24, 24, 27, 0.05);
-
   --animate-caret: caret 1s steps(1) infinite;
 
   @keyframes caret {
@@ -53,6 +48,26 @@
   }
 
   --font-instrument-serif: var(--font-instrument-serif);
+}
+
+/*
+  Shadows stay as real custom properties so the `.dark` block can swap them for
+  values that stay visible on dark surfaces.
+*/
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+@utility shadow-card-raised {
+  box-shadow: var(--shadow-card-raised);
+}
+@utility shadow-highlight {
+  box-shadow: var(--shadow-highlight);
+}
+@utility shadow-button {
+  box-shadow: var(--shadow-button);
+}
+@utility shadow-outline {
+  box-shadow: var(--shadow-outline);
 }
 
 /*
@@ -69,12 +84,14 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: hsl(var(--border));
   }
 }
 
 @layer base {
   :root {
+    color-scheme: light;
+
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -83,18 +100,88 @@
     --popover-foreground: 240 10% 3.9%;
     --primary: 226 70% 55%;
     --primary-foreground: 0 0% 100%;
+    --primary-hover: 226 65% 52%;
+    --brand-panel: 226 70% 55%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted-foreground: 240 3.8% 44%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 48%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 226 70% 55%;
     --radius: 0.5rem;
+
+    --shadow-card: 0 1px 2px rgba(24, 24, 27, 0.04);
+    --shadow-card-raised:
+      0 1px 2px rgba(24, 24, 27, 0.04), 0 8px 20px -8px rgba(24, 24, 27, 0.12);
+    --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    --shadow-button:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(30, 45, 110, 0.3);
+    --shadow-outline: 0 1px 2px rgba(24, 24, 27, 0.05);
+
+    --scene-sky-top: #1f3eb5;
+    --scene-sky-mid: #4a6ee0;
+    --scene-sky-low: #a9bdf7;
+    --scene-sky-horizon: #ffe3c7;
+    --scene-glow-core: #fffaf3;
+    --scene-glow-warm: #ffe8cf;
+    --scene-glow-fade: #ffd9b8;
+    --scene-sun: #fff8ef;
+    --scene-cloud: #ffffff;
+    --scene-ridge-1: #8aa2f0;
+    --scene-ridge-2: #5b7ae4;
+    --scene-ridge-3: #3552c8;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --background: 240 10% 4%;
+    --foreground: 240 5% 96%;
+    --card: 240 7% 11%;
+    --card-foreground: 240 5% 96%;
+    --popover: 240 7% 15%;
+    --popover-foreground: 240 5% 96%;
+    --primary: 226 75% 68%;
+    --primary-foreground: 240 10% 5%;
+    --primary-hover: 226 75% 72%;
+    --brand-panel: 226 62% 26%;
+    --secondary: 240 6% 15%;
+    --secondary-foreground: 240 5% 96%;
+    --muted: 240 8% 8%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 6% 19%;
+    --accent-foreground: 240 5% 96%;
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 18%;
+    --input: 240 6% 18%;
+    --ring: 226 75% 68%;
+
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-card-raised:
+      0 1px 2px rgba(0, 0, 0, 0.45), 0 12px 28px -12px rgba(0, 0, 0, 0.75);
+    --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    --shadow-button:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 1px 2px rgba(0, 0, 0, 0.45);
+    --shadow-outline: 0 1px 2px rgba(0, 0, 0, 0.45);
+
+    --scene-sky-top: #040814;
+    --scene-sky-mid: #0a1430;
+    --scene-sky-low: #162b5c;
+    --scene-sky-horizon: #2f4f9e;
+    --scene-glow-core: #c7d7ff;
+    --scene-glow-warm: #7f9cff;
+    --scene-glow-fade: #4a6ee0;
+    --scene-sun: #dbe6ff;
+    --scene-cloud: #7f9cff;
+    --scene-ridge-1: #1a2f66;
+    --scene-ridge-2: #13244f;
+    --scene-ridge-3: #0b1735;
   }
 
   .my-config {
@@ -109,6 +196,17 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  ::selection {
+    @apply bg-primary/25 text-foreground;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 500ms;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 

@@ -65,7 +65,7 @@ export default function ReviewList({ reviews }: { reviews: Review[] }) {
 
   return (
     <>
-      <h2 className="mt-12 text-xl font-semibold tracking-tight text-zinc-950">
+      <h2 className="text-foreground mt-12 text-xl font-semibold tracking-tight">
         Reviews
       </h2>
 

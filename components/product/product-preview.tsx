@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { Fragment } from "react";
 import { Upload } from "lucide-react";
@@ -29,25 +27,31 @@ export default function ProductPreview({
         fill
         placeholder="blur"
         sizes="(min-width: 1024px) 55vw, 100vw"
-        className="-z-10 object-cover"
+        className="-z-20 object-cover dark:opacity-40"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-black/10 dark:bg-black/45"
       />
 
       <p className="text-center text-sm font-medium text-white/90">
         Live preview of what customers see
       </p>
 
-      <div className="mx-auto mt-5 max-w-md overflow-hidden rounded-xl border border-white/60 bg-white shadow-[0_1px_2px_rgba(20,30,90,0.2),0_32px_64px_-24px_rgba(20,30,90,0.6)]">
-        <div className="flex items-center gap-3 border-b border-zinc-200 px-4 py-2.5">
+      <div className="bg-card dark:border-border mx-auto mt-5 max-w-md overflow-hidden rounded-xl border border-white/60 shadow-[0_1px_2px_rgba(20,30,90,0.2),0_32px_64px_-24px_rgba(20,30,90,0.6)]">
+        <div className="border-border flex items-center gap-3 border-b px-4 py-2.5">
           <WindowDots />
-          <span className="text-xs text-zinc-500">vouch.munadil.com</span>
+          <span className="text-muted-foreground text-xs">
+            vouch.munadil.com
+          </span>
         </div>
 
-        <div aria-hidden="true" className="flex flex-col gap-3 bg-zinc-50 p-6">
-          <p className="text-center text-xl font-semibold tracking-tight wrap-anywhere text-zinc-950">
+        <div aria-hidden="true" className="bg-muted flex flex-col gap-3 p-6">
+          <p className="text-foreground text-center text-xl font-semibold tracking-tight wrap-anywhere">
             {title || "Your page title"}
           </p>
 
-          <p className="mb-2 text-center text-sm wrap-anywhere text-zinc-600">
+          <p className="text-muted-foreground mb-2 text-center text-sm wrap-anywhere">
             {message || "Your message to customers"}
           </p>
 
@@ -56,14 +60,14 @@ export default function ProductPreview({
               <Label>{label}</Label>
 
               <div
-                className={`${height} rounded-md border border-zinc-200 bg-white`}
+                className={`${height} border-border bg-popover rounded-md border`}
               />
             </Fragment>
           ))}
 
           <Label>Upload your photo</Label>
 
-          <div className="flex h-8 w-fit items-center gap-2 rounded-md bg-zinc-900 px-3 text-sm text-white">
+          <div className="bg-foreground text-background flex h-8 w-fit items-center gap-2 rounded-md px-3 text-sm">
             <Upload className="size-4" />
             Upload file
           </div>
@@ -72,7 +76,7 @@ export default function ProductPreview({
 
           <Stars count={5} />
 
-          <div className="bg-primary mt-2 flex h-10 items-center justify-center rounded-lg text-sm font-medium text-white">
+          <div className="bg-primary text-primary-foreground mt-2 flex h-10 items-center justify-center rounded-lg text-sm font-medium">
             Submit review
           </div>
         </div>

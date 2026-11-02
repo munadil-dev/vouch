@@ -11,10 +11,10 @@ export default function EmptyState({
 }) {
   return (
     <section
-      className={`flex flex-col items-center rounded-2xl border border-dashed border-zinc-300 bg-white px-6 py-16 text-center ${className}`}
+      className={`border-border bg-card flex flex-col items-center rounded-2xl border border-dashed px-6 py-16 text-center ${className}`}
     >
-      <h2 className="font-medium text-zinc-950">{title}</h2>
-      <p className="mt-1 max-w-sm text-sm text-zinc-600">{body}</p>
+      <h2 className="text-foreground font-medium">{title}</h2>
+      <p className="text-muted-foreground mt-1 max-w-sm text-sm">{body}</p>
       {children}
     </section>
   );

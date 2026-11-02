@@ -24,7 +24,7 @@ export default function NavbarShell({
       className={cn(
         "sticky top-0 left-0 z-50 border-b transition-[background-color,border-color] duration-200",
         scrolled
-          ? "border-zinc-200/70 bg-white/80 backdrop-blur-md"
+          ? "border-border/70 bg-background/80 backdrop-blur-md"
           : "border-transparent"
       )}
     >

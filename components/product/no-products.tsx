@@ -18,14 +18,18 @@ export default function NoProducts({
         fill
         placeholder="blur"
         sizes="(min-width: 1152px) 1152px, 100vw"
-        className="-z-10 object-cover"
+        className="-z-20 object-cover dark:opacity-45"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-black/10 dark:bg-black/40"
       />
 
       <h2 className="text-2xl font-semibold tracking-tight text-white">
         Create your first product
       </h2>
 
-      <p className="mt-2 max-w-sm text-[15px] leading-6 text-white/85">
+      <p className="mt-2 max-w-sm text-[15px] leading-6 text-white/90">
         You get a review link to send to customers and a widget that shows the
         reviews you pick.
       </p>

@@ -9,7 +9,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`${geist.className} min-h-screen w-full bg-zinc-50`}>
+    <div className={`${geist.className} bg-muted min-h-screen w-full`}>
       <Navbar />
       {children}
     </div>

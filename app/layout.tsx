@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
+import ThemeProvider from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -36,11 +37,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} ${instrumentSerif.variable}`}>
-        {children}
-        <Toaster position="top-right" richColors={true} />
-        <Analytics />
+        <ThemeProvider>
+          {children}
+          <Toaster position="top-right" richColors={true} />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

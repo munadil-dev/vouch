@@ -6,8 +6,9 @@ import { siteLinks } from "@/lib/constant/site.constant";
 import { buttonVariants } from "@/components/ui/button";
 import ProfileDropdown from "./profile-dropdown";
 import NavbarShell from "./navbar-shell";
+import ThemeToggle from "./theme-toggle";
 
-const navLink = "text-zinc-600 transition-colors hover:text-zinc-950";
+const navLink = "text-muted-foreground transition-colors hover:text-foreground";
 
 export default async function Navbar() {
   const session = await auth();
@@ -17,7 +18,7 @@ export default async function Navbar() {
       <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5">
         <div className="flex items-center gap-8">
           <Link
-            className="font-instrument-serif text-xl font-medium text-zinc-950"
+            className="font-instrument-serif text-foreground text-xl font-medium"
             href="/"
           >
             Vouch
@@ -34,6 +35,8 @@ export default async function Navbar() {
         </div>
 
         <div className="flex items-center gap-4 text-sm">
+          <ThemeToggle />
+
           <Link
             href={siteLinks.github}
             target="_blank"

@@ -42,17 +42,19 @@ export default function ReviewFilters({
 }) {
   return (
     <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-      <div className="flex gap-1 rounded-lg bg-zinc-100 p-1">
+      <div className="bg-muted dark:bg-background flex gap-1 rounded-lg p-1">
         {tabs.map(({ id, label }) => (
           <button
             key={id}
             type="button"
             aria-pressed={tab === id}
             onClick={() => onTabChange(id)}
-            className="focus-visible:ring-primary flex h-8 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-950 focus-visible:ring-2 focus-visible:outline-hidden aria-pressed:bg-white aria-pressed:text-zinc-950 aria-pressed:shadow-sm sm:flex-none"
+            className="focus-visible:ring-primary text-muted-foreground hover:bg-accent hover:text-foreground aria-pressed:bg-popover aria-pressed:text-foreground flex h-8 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-hidden aria-pressed:shadow-sm sm:flex-none"
           >
             {label}
-            <span className="text-zinc-400 tabular-nums">{counts[id]}</span>
+            <span className="text-muted-foreground tabular-nums">
+              {counts[id]}
+            </span>
           </button>
         ))}
       </div>
@@ -74,7 +76,7 @@ export default function ReviewFilters({
       <div className="relative sm:ml-auto sm:w-64">
         <Search
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-zinc-400"
+          className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
         />
 
         <Input

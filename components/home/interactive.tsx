@@ -83,7 +83,7 @@ export function CopySnippet({
   children: React.ReactNode;
 }) {
   return (
-    <figure className="w-full min-w-0 overflow-hidden rounded-xl bg-zinc-950 text-[13px] leading-relaxed shadow-[0_1px_2px_rgba(24,24,27,0.2),0_16px_32px_-12px_rgba(24,24,27,0.45)] ring-1 ring-zinc-950/5">
+    <figure className="w-full min-w-0 overflow-hidden rounded-xl bg-zinc-950 text-[13px] leading-relaxed shadow-[0_1px_2px_rgba(24,24,27,0.2),0_16px_32px_-12px_rgba(24,24,27,0.45)] ring-1 ring-white/10">
       <figcaption className="flex items-center gap-3 border-b border-white/10 py-1.5 pr-1.5 pl-4 text-xs text-zinc-400">
         <WindowDots tone="muted" />
         <span className="flex-1">index.html</span>
@@ -142,7 +142,7 @@ export function HeartButton({
         aria-label={label}
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.12 }}
-        className={`focus-visible:ring-primary flex size-9 shrink-0 cursor-pointer touch-manipulation items-center justify-center rounded-full transition-colors hover:bg-rose-50 focus-visible:ring-2 focus-visible:outline-hidden ${className}`}
+        className={`focus-visible:ring-primary flex size-9 shrink-0 cursor-pointer touch-manipulation items-center justify-center rounded-full transition-colors hover:bg-rose-50 focus-visible:ring-2 focus-visible:outline-hidden dark:hover:bg-rose-500/10 ${className}`}
       >
         <motion.span
           key={String(pressed)}
@@ -152,7 +152,7 @@ export function HeartButton({
         >
           <Heart
             className={`size-4.5 transition-colors duration-150 ${
-              pressed ? "fill-rose-500 text-rose-500" : "text-zinc-400"
+              pressed ? "fill-rose-500 text-rose-500" : "text-muted-foreground"
             }`}
           />
         </motion.span>
@@ -182,18 +182,18 @@ export function FavoriteToggle({
 
 export function CopyLink({ href, display }: { href: string; display: string }) {
   return (
-    <div className="flex items-center gap-1 rounded-full border border-zinc-200 bg-white py-1 pr-1 pl-4">
+    <div className="border-border bg-card flex items-center gap-1 rounded-full border py-1 pr-1 pl-4">
       <a
         href={href}
         target="_blank"
-        className="min-w-0 flex-1 truncate text-sm text-zinc-700 underline-offset-4 hover:underline"
+        className="text-foreground min-w-0 flex-1 truncate text-sm underline-offset-4 hover:underline"
       >
         {display}
       </a>
       <CopyButton
         value={href}
         label="Copy review link"
-        className="rounded-full text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900"
+        className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-full"
       />
     </div>
   );
@@ -248,7 +248,7 @@ export function KeyboardRating({ className = "" }: { className?: string }) {
               className={`size-7 transition-colors duration-150 ${
                 value <= rating
                   ? "fill-amber-400 text-amber-400"
-                  : "fill-zinc-200 text-zinc-200"
+                  : "fill-muted-foreground/25 text-muted-foreground/25"
               }`}
             />
           </button>

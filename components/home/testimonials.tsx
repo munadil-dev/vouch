@@ -16,18 +16,20 @@ function Card({
   favorite: boolean;
 }) {
   return (
-    <li className="shadow-card-raised rounded-2xl border border-zinc-200 bg-white p-5">
+    <li className="shadow-card-raised border-border bg-card rounded-2xl border p-5">
       <header className="flex items-center gap-3">
         <Avatar name={testimonial.name} size="md" />
         <p className="flex min-w-0 flex-1 flex-col text-sm">
-          <span className="truncate font-medium text-zinc-950">
+          <span className="text-foreground truncate font-medium">
             {testimonial.name}
           </span>
-          <span className="truncate text-zinc-500">{testimonial.username}</span>
+          <span className="text-muted-foreground truncate">
+            {testimonial.username}
+          </span>
         </p>
         <FavoriteToggle name={testimonial.name} initial={favorite} />
       </header>
-      <blockquote className="mt-4 text-[15px] leading-6 text-zinc-700">
+      <blockquote className="text-muted-foreground mt-4 text-[15px] leading-6">
         {testimonial.body}
       </blockquote>
       <Stars count={5} size="sm" className="mt-4" />
@@ -39,10 +41,10 @@ export default function Testimonials() {
   return (
     <section className="overflow-hidden py-16">
       <header className="mx-auto max-w-2xl px-5 text-center">
-        <h2 className="text-3xl leading-[1.1] font-semibold tracking-[-0.035em] text-balance text-zinc-950 sm:text-5xl">
+        <h2 className="text-foreground text-3xl leading-[1.1] font-semibold tracking-[-0.035em] text-balance sm:text-5xl">
           People like being asked
         </h2>
-        <p className="mt-4 text-lg leading-7 text-pretty text-zinc-600">
+        <p className="text-muted-foreground mt-4 text-lg leading-7 text-pretty">
           Kind words from people who put a review link in front of their
           customers.
         </p>

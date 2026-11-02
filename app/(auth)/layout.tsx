@@ -8,7 +8,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`${geist.className} min-h-svh w-full bg-white`}>
+    <div className={`${geist.className} bg-background min-h-svh w-full`}>
       {children}
     </div>
   );

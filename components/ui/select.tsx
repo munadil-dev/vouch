@@ -25,14 +25,14 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        "border-input ring-offset-background focus-visible:ring-ring flex h-10 w-fit cursor-pointer items-center justify-between gap-2 rounded-md border bg-white px-3 text-sm whitespace-nowrap outline-hidden transition-colors hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "border-input ring-offset-background focus-visible:ring-ring bg-popover hover:bg-accent flex h-10 w-fit cursor-pointer items-center justify-between gap-2 rounded-md border px-3 text-sm whitespace-nowrap outline-hidden transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}
     >
       {children}
       <SelectPrimitive.Icon
-        render={<ChevronDownIcon className="size-4 text-zinc-500" />}
+        render={<ChevronDownIcon className="text-muted-foreground size-4" />}
       />
     </SelectPrimitive.Trigger>
   );

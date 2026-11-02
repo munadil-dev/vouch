@@ -17,18 +17,18 @@ export default function ProductCreated({
 
   return (
     <main className="flex min-h-[calc(100svh-3.5rem)] items-center justify-center px-5 py-12">
-      <section className="shadow-card-raised w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-6 text-center">
+      <section className="shadow-card-raised border-border bg-card w-full max-w-md rounded-2xl border p-6 text-center">
         <SuccessIcon />
 
-        <h1 className="mt-4 text-xl font-semibold tracking-tight text-zinc-950">
+        <h1 className="text-foreground mt-4 text-xl font-semibold tracking-tight">
           {name} is ready
         </h1>
 
-        <p className="mt-1 text-sm text-zinc-600">
+        <p className="text-muted-foreground mt-1 text-sm">
           Send this link to customers to collect reviews.
         </p>
 
-        <p className="mt-5 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2.5 font-mono text-[13px] break-all text-zinc-700">
+        <p className="border-border bg-muted text-foreground mt-5 rounded-lg border px-3 py-2.5 font-mono text-[13px] break-all">
           {link}
         </p>
 

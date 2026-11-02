@@ -94,10 +94,10 @@ export default async function Dashboard() {
     <main className="mx-auto max-w-6xl px-5 py-12">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold tracking-[-0.03em] text-zinc-950">
+          <h1 className="text-foreground text-3xl font-semibold tracking-[-0.03em]">
             Products
           </h1>
-          <p className="mt-1.5 text-[15px] text-zinc-600">
+          <p className="text-muted-foreground mt-1.5 text-[15px]">
             Each product has its own review link and widget.
           </p>
         </div>

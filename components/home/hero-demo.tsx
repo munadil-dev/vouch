@@ -28,19 +28,21 @@ export default function HeroDemo() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="grid overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_1px_2px_rgba(20,30,90,0.2),0_32px_64px_-24px_rgba(20,30,90,0.6)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div className="border-border bg-card grid overflow-hidden rounded-xl border shadow-[0_1px_2px_rgba(20,30,90,0.2),0_32px_64px_-24px_rgba(20,30,90,0.6)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] dark:shadow-[0_1px_2px_rgba(0,0,0,0.5),0_32px_64px_-24px_rgba(0,0,0,0.8)]">
         <section
           aria-label="Your dashboard"
-          className="border-b border-zinc-200 md:border-r md:border-b-0"
+          className="border-border border-b md:border-r md:border-b-0"
         >
-          <header className="flex items-baseline justify-between border-b border-zinc-200 px-5 py-4">
-            <p className="text-sm font-semibold text-zinc-900">Acme reviews</p>
+          <header className="border-border flex items-baseline justify-between border-b px-5 py-4">
+            <p className="text-foreground text-sm font-semibold">
+              Acme reviews
+            </p>
             <p className="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-xs font-medium tabular-nums">
               {favorites.length} of {demoResponses.length} on your site
             </p>
           </header>
 
-          <ul className="divide-y divide-zinc-100">
+          <ul className="divide-border divide-y">
             {demoResponses.map((response) => (
               <li
                 key={response.id}
@@ -49,12 +51,12 @@ export default function HeroDemo() {
                 <Avatar name={response.name} />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <p className="truncate text-sm font-medium text-zinc-900">
+                    <p className="text-foreground truncate text-sm font-medium">
                       {response.name}
                     </p>
                     <Stars count={response.rating} size="sm" />
                   </div>
-                  <p className="mt-0.5 line-clamp-2 text-sm text-zinc-600">
+                  <p className="text-muted-foreground mt-0.5 line-clamp-2 text-sm">
                     {response.message}
                   </p>
                 </div>
@@ -69,14 +71,14 @@ export default function HeroDemo() {
           </ul>
         </section>
 
-        <section aria-label="Your website" className="bg-[#f5f7ff]">
-          <header className="flex items-center gap-3 border-b border-zinc-200 bg-white px-5 py-4">
+        <section aria-label="Your website" className="bg-muted">
+          <header className="border-border bg-card flex items-center gap-3 border-b px-5 py-4">
             <WindowDots />
-            <p className="text-xs text-zinc-500">acme.app</p>
+            <p className="text-muted-foreground text-xs">acme.app</p>
           </header>
 
           <div className="px-5 py-6 sm:px-8">
-            <p className="text-lg font-semibold tracking-tight text-zinc-900">
+            <p className="text-foreground text-lg font-semibold tracking-tight">
               What customers say about Acme
             </p>
 
@@ -94,15 +96,15 @@ export default function HeroDemo() {
                       transition: { duration: 0.15, ease },
                     }}
                     transition={{ duration: 0.25, ease }}
-                    className="flex w-full flex-col gap-3 rounded-[7px] border border-zinc-300/70 bg-white p-3 shadow-[0_1px_2px_rgba(16,24,40,0.05)] sm:w-[calc(50%-6px)]"
+                    className="shadow-card border-border bg-card flex w-full flex-col gap-3 rounded-[7px] border p-3 sm:w-[calc(50%-6px)]"
                   >
                     <Stars count={response.rating} size="sm" />
-                    <blockquote className="text-sm text-zinc-700">
+                    <blockquote className="text-muted-foreground text-sm">
                       {response.message}
                     </blockquote>
                     <div className="flex items-center gap-2">
                       <Avatar name={response.name} />
-                      <p className="text-sm font-semibold text-zinc-900">
+                      <p className="text-foreground text-sm font-semibold">
                         {response.name}
                       </p>
                     </div>
@@ -112,7 +114,7 @@ export default function HeroDemo() {
             </ul>
 
             {shown.length === 0 && (
-              <p className="rounded-[7px] border border-dashed border-zinc-300 p-6 text-center text-sm text-zinc-500">
+              <p className="border-border text-muted-foreground rounded-[7px] border border-dashed p-6 text-center text-sm">
                 Favorite a response to show it here.
               </p>
             )}

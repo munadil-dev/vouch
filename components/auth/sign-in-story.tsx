@@ -40,7 +40,7 @@ export default function SignInStory() {
   return (
     <MotionConfig reducedMotion="user">
       <div aria-hidden="true" className="mx-auto flex w-full max-w-sm flex-col">
-        <p className="flex w-fit items-center gap-2 self-center rounded-full bg-white/90 py-1.5 pr-4 pl-3 text-sm text-zinc-700 shadow-[0_1px_2px_rgba(20,30,90,0.2)] backdrop-blur-sm">
+        <p className="border-border bg-card/90 text-foreground flex w-fit items-center gap-2 self-center rounded-full border py-1.5 pr-4 pl-3 text-sm shadow-[0_1px_2px_rgba(20,30,90,0.2)] backdrop-blur-sm dark:shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
           <Link2 className="text-primary size-4" />
           vouch.munadil.com/acme
         </p>
@@ -55,17 +55,17 @@ export default function SignInStory() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.3 } }}
                 transition={{ duration: 0.5, ease }}
-                className="flex items-start gap-3 rounded-xl border border-white/60 bg-white p-3.5 shadow-[0_1px_2px_rgba(20,30,90,0.15),0_16px_32px_-16px_rgba(20,30,90,0.45)]"
+                className="border-border bg-card flex items-start gap-3 rounded-xl border p-3.5 shadow-[0_1px_2px_rgba(20,30,90,0.15),0_16px_32px_-16px_rgba(20,30,90,0.45)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.5),0_16px_32px_-16px_rgba(0,0,0,0.75)]"
               >
                 <Avatar name={reply.name} />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <p className="truncate text-sm font-medium text-zinc-900">
+                    <p className="text-foreground truncate text-sm font-medium">
                       {reply.name}
                     </p>
                     <Stars count={reply.rating} size="sm" />
                   </div>
-                  <p className="mt-0.5 line-clamp-2 text-sm text-zinc-600">
+                  <p className="text-muted-foreground mt-0.5 line-clamp-2 text-sm">
                     {reply.message}
                   </p>
                 </div>
@@ -79,7 +79,7 @@ export default function SignInStory() {
                     className={`size-4 transition-colors ${
                       isHearted(reply.id)
                         ? "fill-rose-500 text-rose-500"
-                        : "text-zinc-300"
+                        : "text-muted-foreground/60"
                     }`}
                   />
                 </motion.span>
@@ -88,20 +88,20 @@ export default function SignInStory() {
           </AnimatePresence>
         </ul>
 
-        <div className="mt-6 overflow-hidden rounded-xl border border-white/60 bg-white shadow-[0_1px_2px_rgba(20,30,90,0.2),0_32px_64px_-24px_rgba(20,30,90,0.6)]">
-          <div className="flex items-center gap-3 border-b border-zinc-200 px-4 py-2.5">
+        <div className="border-border bg-card mt-6 overflow-hidden rounded-xl border shadow-[0_1px_2px_rgba(20,30,90,0.2),0_32px_64px_-24px_rgba(20,30,90,0.6)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.5),0_32px_64px_-24px_rgba(0,0,0,0.8)]">
+          <div className="border-border flex items-center gap-3 border-b px-4 py-2.5">
             <WindowDots />
-            <span className="text-xs text-zinc-500">acme.app</span>
+            <span className="text-muted-foreground text-xs">acme.app</span>
           </div>
-          <div className="bg-zinc-50 p-4">
-            <p className="text-sm font-semibold text-zinc-900">
+          <div className="bg-muted p-4">
+            <p className="text-foreground text-sm font-semibold">
               What customers say about Acme
             </p>
             <ul className="mt-3 grid h-24 grid-cols-2 gap-2.5">
               {[0, 1].map((slot) => (
                 <li
                   key={slot}
-                  className="relative rounded-lg border border-dashed border-zinc-300"
+                  className="border-border relative rounded-lg border border-dashed"
                 >
                   <AnimatePresence initial={false}>
                     {onSite[slot] && (
@@ -111,13 +111,13 @@ export default function SignInStory() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, transition: { duration: 0.3 } }}
                         transition={{ duration: 0.4, ease }}
-                        className="absolute -inset-px flex flex-col rounded-lg border border-zinc-200 bg-white p-2.5"
+                        className="border-border bg-card absolute -inset-px flex flex-col rounded-lg border p-2.5"
                       >
                         <Stars count={onSite[slot].rating} size="sm" />
-                        <p className="mt-1.5 line-clamp-2 text-xs leading-4 text-zinc-600">
+                        <p className="text-muted-foreground mt-1.5 line-clamp-2 text-xs leading-4">
                           {onSite[slot].message}
                         </p>
-                        <p className="mt-auto pt-1 text-xs font-medium text-zinc-900">
+                        <p className="text-foreground mt-auto pt-1 text-xs font-medium">
                           {onSite[slot].name}
                         </p>
                       </motion.div>

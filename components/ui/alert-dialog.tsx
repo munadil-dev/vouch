@@ -20,7 +20,7 @@ function AlertDialogContent({
 
       <AlertDialogPrimitive.Popup
         className={cn(
-          "bg-background fixed top-[50%] left-[50%] z-50 grid max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg translate-x-[-50%] translate-y-[-50%] gap-6 overflow-y-auto rounded-2xl border p-6 shadow-lg transition-[scale,opacity] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0",
+          "bg-card fixed top-[50%] left-[50%] z-50 grid max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg translate-x-[-50%] translate-y-[-50%] gap-6 overflow-y-auto rounded-2xl border p-6 shadow-lg transition-[scale,opacity] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0",
           className
         )}
         {...props}
@@ -67,7 +67,7 @@ function AlertDialogDescription({
 }: AlertDialogPrimitive.Description.Props) {
   return (
     <AlertDialogPrimitive.Description
-      className={cn("text-sm text-zinc-600", className)}
+      className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />
   );

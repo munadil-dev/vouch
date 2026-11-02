@@ -82,7 +82,7 @@ export default function ProductForm({
             "aria-required": true,
             "aria-invalid": error ? true : undefined,
             "aria-describedby": `${field.id}-hint`,
-            className: "mt-2 bg-white aria-invalid:border-red-500",
+            className: "mt-2 bg-popover aria-invalid:border-red-500",
           };
 
           return (
@@ -101,7 +101,7 @@ export default function ProductForm({
 
               <p
                 id={`${field.id}-hint`}
-                className={`mt-2 text-sm ${error ? "text-red-600" : "text-zinc-500"}`}
+                className={`mt-2 text-sm ${error ? "text-red-600 dark:text-red-400" : "text-muted-foreground"}`}
               >
                 {error ?? field.hint}
               </p>
